@@ -223,29 +223,41 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         >
           <motion.button 
-            className="bg-primary hover:bg-primary/80 text-white px-8 py-4 rounded-full text-lg font-semibold interactive-hover immersive-glow"
+            className="bg-primary hover:bg-primary/80 text-white px-8 py-4 rounded-full text-lg font-semibold interactive-hover immersive-glow section-transition relative overflow-hidden"
             onClick={() => scrollToSection('programs')}
             whileHover={{ 
-              scale: 1.08,
-              boxShadow: "0 0 30px rgba(106, 90, 205, 0.6)"
+              scale: 1.1,
+              rotateY: 5,
+              boxShadow: "0 0 40px rgba(106, 90, 205, 0.8)"
             }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            Explore Nossos Programas
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-r from-primary/50 to-primary/30 opacity-0"
+              whileHover={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+            <span className="relative z-10">Explore Nossos Programas</span>
           </motion.button>
           
           <motion.button 
-            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-full text-lg font-semibold interactive-hover"
+            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-full text-lg font-semibold interactive-hover section-transition relative overflow-hidden"
             whileHover={{ 
-              scale: 1.08,
+              scale: 1.1,
+              rotateY: -5,
               backgroundColor: "rgba(255, 255, 255, 0.95)",
-              boxShadow: "0 0 30px rgba(255, 255, 255, 0.4)"
+              boxShadow: "0 0 40px rgba(255, 255, 255, 0.6)"
             }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            Tour Virtual
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 opacity-0"
+              whileHover={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+            <span className="relative z-10">Tour Virtual</span>
           </motion.button>
         </motion.div>
       </motion.div>
@@ -273,25 +285,80 @@ export default function HeroSection() {
         </motion.button>
       )}
 
-      {/* Particle System */}
-      {[...Array(12)].map((_, i) => (
+      {/* Enhanced Particle System */}
+      {[...Array(25)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-white opacity-40 rounded-full"
+          className="absolute rounded-full"
           style={{
-            left: `${15 + i * 7}%`,
-            top: `${30 + Math.sin(i * 0.5) * 40}%`,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            width: `${Math.random() * 3 + 1}px`,
+            height: `${Math.random() * 3 + 1}px`,
+            background: i % 3 === 0 ? 'rgba(106, 90, 205, 0.6)' : 'rgba(255, 255, 255, 0.5)',
           }}
           animate={{
-            y: [-30, -80, -30],
-            x: [0, Math.sin(i) * 20, 0],
-            opacity: [0.4, 0.9, 0.4],
-            scale: [1, 1.8, 1],
+            y: [0, -100 - Math.random() * 50, 0],
+            x: [0, Math.sin(i) * 30, 0],
+            opacity: [0.3, 1, 0.3],
+            scale: [1, 2.5, 1],
+            rotate: [0, 360],
           }}
           transition={{
-            duration: 5 + i * 0.3,
+            duration: 8 + Math.random() * 4,
             repeat: Infinity,
-            delay: i * 0.4,
+            delay: i * 0.2,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+      
+      {/* Floating Geometric Shapes */}
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={`geo-${i}`}
+          className="absolute opacity-10"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            width: `${20 + Math.random() * 15}px`,
+            height: `${20 + Math.random() * 15}px`,
+            background: 'rgba(106, 90, 205, 0.3)',
+            borderRadius: i % 2 === 0 ? '50%' : '0%',
+          }}
+          animate={{
+            y: [0, -50, 0],
+            x: [0, Math.cos(i) * 25, 0],
+            rotate: [0, 180, 360],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 12 + i * 0.5,
+            repeat: Infinity,
+            delay: i * 0.8,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+      
+      {/* Sparkle Effect */}
+      {[...Array(15)].map((_, i) => (
+        <motion.div
+          key={`sparkle-${i}`}
+          className="absolute w-2 h-2 bg-white rounded-full"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            filter: 'blur(0.5px)',
+          }}
+          animate={{
+            opacity: [0, 1, 0],
+            scale: [0, 1.5, 0],
+          }}
+          transition={{
+            duration: 2 + Math.random() * 2,
+            repeat: Infinity,
+            delay: i * 0.5,
             ease: "easeInOut"
           }}
         />

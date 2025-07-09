@@ -41,13 +41,35 @@ export default function ProgramsSection() {
   ];
 
   return (
-    <section id="programs" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="programs" className="py-20 bg-white relative overflow-hidden">
+      {/* Background Animated Elements */}
+      <div className="absolute inset-0 opacity-3">
+        <motion.div 
+          className="absolute top-20 right-10 w-20 h-20 bg-primary/10 rounded-full floating-animation"
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.1, 0.3, 0.1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 left-20 w-16 h-16 bg-primary/20 rounded-full rotate-slow"
+        />
+        <motion.div 
+          className="absolute top-1/2 right-1/3 w-12 h-12 bg-primary/15 rounded-full pulse-glow"
+        />
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div 
           className="text-center mb-16 scroll-reveal"
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 60, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-6">
@@ -62,23 +84,54 @@ export default function ProgramsSection() {
           {programs.map((program, index) => (
             <motion.div
               key={index}
-              className="group bg-gradient-to-br from-primary/5 to-primary/15 rounded-2xl p-8 interactive-hover immersive-glow magnetic-hover depth-shadow-lg scroll-reveal"
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              className="group bg-gradient-to-br from-primary/5 to-primary/15 rounded-2xl p-8 interactive-hover immersive-glow magnetic-hover depth-shadow-lg scroll-reveal section-transition gradient-shift"
+              initial={{ opacity: 0, y: 80, scale: 0.8, rotateX: 15 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+              transition={{ 
+                duration: 1,
+                delay: index * 0.2,
+                type: "spring",
+                stiffness: 100,
+                damping: 15
+              }}
               viewport={{ once: true }}
               whileHover={{ 
-                scale: 1.08,
-                rotateY: 5,
-                boxShadow: "0 25px 50px rgba(106, 90, 205, 0.25)"
+                scale: 1.1,
+                rotateY: 8,
+                rotateX: 3,
+                boxShadow: "0 30px 60px rgba(106, 90, 205, 0.3)",
+                transition: { duration: 0.4 }
               }}
             >
               <motion.div 
-                className="text-4xl text-primary mb-4"
-                whileHover={{ scale: 1.1, rotate: 5 }}
+                className="text-4xl text-primary mb-4 relative"
+                whileHover={{ scale: 1.2, rotate: 10 }}
                 transition={{ duration: 0.3 }}
+                animate={{
+                  scale: [1, 1.05, 1],
+                  rotateY: [0, 5, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  delay: index * 0.5,
+                  ease: "easeInOut"
+                }}
               >
                 <i className={program.icon}></i>
+                <motion.div 
+                  className="absolute -inset-2 bg-primary/20 rounded-full blur-md"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: index * 0.3,
+                    ease: "easeInOut"
+                  }}
+                />
               </motion.div>
               
               <h3 className="text-2xl font-bold text-secondary mb-4">{program.title}</h3>

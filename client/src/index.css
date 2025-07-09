@@ -95,15 +95,16 @@
   }
 
   .interactive-hover {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     transform-style: preserve-3d;
   }
 
   .interactive-hover:hover {
-    transform: translateY(-8px) rotateX(5deg);
+    transform: translateY(-12px) rotateX(8deg) rotateY(2deg);
     box-shadow: 
-      0 20px 40px rgba(106, 90, 205, 0.2),
-      0 0 0 1px rgba(255, 255, 255, 0.1);
+      0 25px 50px rgba(106, 90, 205, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.15),
+      0 0 30px rgba(106, 90, 205, 0.2);
   }
 
   .text-glow {
@@ -185,6 +186,37 @@
       rgba(241, 245, 249, 0.9) 100%);
     backdrop-filter: blur(10px);
   }
+
+  .enhanced-parallax {
+    will-change: transform;
+    transform-style: preserve-3d;
+  }
+
+  .floating-animation {
+    animation: advancedFloat 8s ease-in-out infinite;
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  .rotate-slow {
+    animation: rotateSlow 20s linear infinite;
+  }
+
+  .section-transition {
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .gradient-shift {
+    background: linear-gradient(270deg, 
+      rgba(106, 90, 205, 0.1), 
+      rgba(139, 69, 19, 0.1), 
+      rgba(106, 90, 205, 0.1)
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 6s ease infinite;
+  }
 }
 
 @keyframes fadeInUp {
@@ -223,4 +255,39 @@
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
+}
+
+@keyframes advancedFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg); 
+  }
+  25% { 
+    transform: translateY(-15px) rotateX(5deg) rotateY(2deg); 
+  }
+  50% { 
+    transform: translateY(-25px) rotateX(0deg) rotateY(0deg); 
+  }
+  75% { 
+    transform: translateY(-10px) rotateX(-5deg) rotateY(-2deg); 
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(106, 90, 205, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(106, 90, 205, 0.6);
+  }
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

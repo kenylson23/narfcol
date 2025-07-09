@@ -9,14 +9,29 @@ export default function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-neutral">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-20 bg-neutral relative overflow-hidden">
+      {/* Background Parallax Elements */}
+      <div className="absolute inset-0 opacity-5">
+        <motion.div 
+          className="absolute top-10 left-10 w-32 h-32 rounded-full bg-primary rotate-slow"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-20 w-24 h-24 rounded-full bg-primary/30 floating-animation"
+        />
+        <motion.div 
+          className="absolute top-1/2 left-1/4 w-16 h-16 rounded-full bg-primary/20 pulse-glow"
+        />
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div 
-            className="scroll-reveal"
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            className="scroll-reveal enhanced-parallax"
+            initial={{ opacity: 0, x: -60, rotateY: -15 }}
+            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-6">
@@ -33,17 +48,37 @@ export default function AboutSection() {
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="text-center p-6 bg-white rounded-xl shadow-lg interactive-hover immersive-glow"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="text-center p-6 bg-white rounded-xl shadow-lg interactive-hover immersive-glow gradient-shift section-transition"
+                  initial={{ opacity: 0, y: 40, scale: 0.8 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: index * 0.15,
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 20
+                  }}
                   viewport={{ once: true }}
                   whileHover={{ 
-                    scale: 1.08, 
-                    boxShadow: "0 20px 40px rgba(106, 90, 205, 0.15)" 
+                    scale: 1.12, 
+                    rotateY: 5,
+                    boxShadow: "0 25px 50px rgba(106, 90, 205, 0.25)",
+                    transition: { duration: 0.3 }
                   }}
                 >
-                  <div className="text-3xl font-bold text-primary mb-2">{stat.number}</div>
+                  <motion.div 
+                    className="text-3xl font-bold text-primary mb-2"
+                    animate={{ 
+                      scale: [1, 1.05, 1],
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: index * 0.5
+                    }}
+                  >
+                    {stat.number}
+                  </motion.div>
                   <div className="text-gray-700">{stat.label}</div>
                 </motion.div>
               ))}
@@ -51,18 +86,52 @@ export default function AboutSection() {
           </motion.div>
           
           <motion.div 
-            className="scroll-reveal"
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            className="scroll-reveal enhanced-parallax"
+            initial={{ opacity: 0, x: 60, rotateY: 15 }}
+            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <motion.img 
-              src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-              alt="Colégio Narfive Campus" 
-              className="rounded-2xl shadow-2xl w-full h-auto transform hover:scale-105 transition-all duration-500"
-              whileHover={{ scale: 1.02 }}
-            />
+            <div className="relative">
+              <motion.img 
+                src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+                alt="Colégio Narfive Campus" 
+                className="rounded-2xl shadow-2xl w-full h-auto section-transition"
+                whileHover={{ 
+                  scale: 1.05,
+                  rotateY: 5,
+                  boxShadow: "0 30px 60px rgba(106, 90, 205, 0.2)"
+                }}
+                transition={{ duration: 0.5 }}
+              />
+              
+              {/* Floating overlay elements */}
+              <motion.div 
+                className="absolute -top-4 -right-4 w-8 h-8 bg-primary rounded-full pulse-glow"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.7, 1, 0.7],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              <motion.div 
+                className="absolute -bottom-6 -left-6 w-12 h-12 bg-primary/30 rounded-full floating-animation"
+                animate={{
+                  y: [0, -15, 0],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
           </motion.div>
         </div>
       </div>

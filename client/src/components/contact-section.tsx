@@ -102,13 +102,53 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-primary">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-20 bg-primary relative overflow-hidden">
+      {/* Animated Wave Background */}
+      <div className="absolute inset-0 opacity-10">
+        <motion.div 
+          className="absolute top-10 left-0 w-full h-32 bg-gradient-to-r from-white/20 via-white/10 to-white/20 rounded-full"
+          animate={{
+            x: [-200, 200, -200],
+            scaleX: [1, 1.5, 1],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-0 w-full h-24 bg-gradient-to-l from-white/15 via-white/5 to-white/15 rounded-full"
+          animate={{
+            x: [200, -200, 200],
+            scaleX: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute top-1/2 left-0 w-full h-20 bg-gradient-to-r from-white/10 via-white/20 to-white/10 rounded-full"
+          animate={{
+            x: [-300, 300, -300],
+            scaleY: [1, 1.8, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div 
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 60, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -122,13 +162,25 @@ export default function ContactSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <motion.div 
-            className="scroll-reveal"
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            className="scroll-reveal enhanced-parallax"
+            initial={{ opacity: 0, x: -60, rotateY: -10 }}
+            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <div className="glass-morphism rounded-2xl p-8 border border-white/20 immersive-glow">
+            <div className="glass-morphism rounded-2xl p-8 border border-white/20 immersive-glow section-transition">
+              <motion.div 
+                className="absolute -top-2 -right-2 w-6 h-6 bg-white/30 rounded-full pulse-glow"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 0.8, 0.3],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
               <h3 className="text-2xl font-bold text-white mb-8">Informações de Contato</h3>
               
               <div className="space-y-6">
@@ -174,13 +226,25 @@ export default function ContactSection() {
 
           {/* Contact Form */}
           <motion.div 
-            className="scroll-reveal"
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            className="scroll-reveal enhanced-parallax"
+            initial={{ opacity: 0, x: 60, rotateY: 10 }}
+            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <div className="bg-white rounded-2xl p-8 shadow-2xl">
+            <div className="bg-white rounded-2xl p-8 shadow-2xl section-transition relative">
+              <motion.div 
+                className="absolute -top-3 -left-3 w-8 h-8 bg-primary/20 rounded-full floating-animation"
+                animate={{
+                  y: [0, -10, 0],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
               <h3 className="text-2xl font-bold text-secondary mb-6">Envie-nos uma Mensagem</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
