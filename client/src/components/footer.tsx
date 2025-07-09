@@ -42,7 +42,7 @@ export default function Footer() {
             viewport={{ once: true }}
           >
             <div className="text-2xl font-bold mb-4">
-              <span className="text-primary">Narfive</span> Colégio
+              Colégio <span className="text-primary">Narfive</span>
             </div>
             <p className="text-gray-300 mb-6">
               Formando líderes do futuro através de educação de excelência, valores sólidos e inovação pedagógica.

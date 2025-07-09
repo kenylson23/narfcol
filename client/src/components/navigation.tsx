@@ -33,7 +33,7 @@ export default function Navigation() {
             transition={{ duration: 0.5 }}
           >
             <div className="text-2xl font-bold text-white">
-              <span className="text-primary">Narfive</span> Colégio
+              Colégio <span className="text-primary">Narfive</span>
             </div>
           </motion.div>
           
