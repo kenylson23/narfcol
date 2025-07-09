@@ -1,0 +1,191 @@
+import { motion } from "framer-motion";
+
+export default function StudentLifeSection() {
+  const activities = [
+    { icon: "fas fa-microscope", label: "Clube de Ciências" },
+    { icon: "fas fa-music", label: "Orquestra Escolar" },
+    { icon: "fas fa-chess", label: "Clube de Xadrez" },
+    { icon: "fas fa-theater-masks", label: "Grupo de Teatro" },
+    { icon: "fas fa-robot", label: "Robótica" },
+    { icon: "fas fa-newspaper", label: "Jornal Escolar" }
+  ];
+
+  const facilities = [
+    {
+      icon: "fas fa-book",
+      title: "Biblioteca Digital",
+      description: "Acesso a mais de 50.000 recursos digitais e físicos"
+    },
+    {
+      icon: "fas fa-flask",
+      title: "Laboratórios Científicos",
+      description: "Equipamentos modernos para física, química e biologia"
+    },
+    {
+      icon: "fas fa-dumbbell",
+      title: "Complexo Desportivo",
+      description: "Ginásio, campos de futebol, basquetebol e piscina"
+    }
+  ];
+
+  const eventImages = [
+    {
+      src: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+      alt: "Festival Cultural"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+      alt: "Cerimónia de Graduação"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+      alt: "Competições Desportivas"
+    }
+  ];
+
+  return (
+    <section id="life" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          className="text-center mb-16 scroll-reveal"
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-6">
+            Vida <span className="text-primary">Estudantil</span>
+          </h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Uma experiência educacional rica e diversificada que vai além da sala de aula, promovendo crescimento pessoal, liderança e cidadania ativa.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+          <motion.div 
+            className="scroll-reveal"
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <motion.img 
+              src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+              alt="Feira de Ciências" 
+              className="rounded-2xl shadow-2xl w-full h-auto"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.div>
+          
+          <motion.div 
+            className="scroll-reveal"
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl font-bold text-secondary mb-6">Atividades Extracurriculares</h3>
+            <p className="text-lg text-gray-600 mb-6">
+              Oferecemos mais de 30 clubes e atividades extracurriculares que permitem aos estudantes explorar seus interesses, desenvolver talentos e construir amizades duradouras.
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              {activities.map((activity, index) => (
+                <motion.div
+                  key={index}
+                  className="flex items-center space-x-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <i className={`${activity.icon} text-primary text-xl`}></i>
+                  <span className="text-gray-700">{activity.label}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+          <motion.div 
+            className="scroll-reveal lg:order-2"
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <motion.img 
+              src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+              alt="Biblioteca Moderna" 
+              className="rounded-2xl shadow-2xl w-full h-auto"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.div>
+          
+          <motion.div 
+            className="scroll-reveal lg:order-1"
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-3xl font-bold text-secondary mb-6">Instalações Modernas</h3>
+            <p className="text-lg text-gray-600 mb-6">
+              Nosso campus oferece instalações de última geração projetadas para apoiar todos os aspectos da experiência educacional e promover um ambiente de aprendizagem inspirador.
+            </p>
+            <div className="space-y-4">
+              {facilities.map((facility, index) => (
+                <motion.div
+                  key={index}
+                  className="flex items-start space-x-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ x: 10 }}
+                >
+                  <div className="bg-primary/10 p-3 rounded-full">
+                    <i className={`${facility.icon} text-primary`}></i>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-secondary">{facility.title}</h4>
+                    <p className="text-gray-600">{facility.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Events Gallery */}
+        <motion.div 
+          className="scroll-reveal"
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <h3 className="text-3xl font-bold text-secondary text-center mb-12">Eventos e Tradições</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {eventImages.map((image, index) => (
+              <motion.img
+                key={index}
+                src={image.src}
+                alt={image.alt}
+                className="rounded-xl shadow-lg w-full h-64 object-cover transform hover:scale-105 transition-all duration-300"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05 }}
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
