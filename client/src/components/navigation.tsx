@@ -48,6 +48,10 @@ export default function Navigation() {
               { name: 'Programas', id: 'programs' },
               { name: 'Professores', id: 'faculty' },
               { name: 'Vida Estudantil', id: 'life' },
+              { name: 'Galeria', id: 'gallery' },
+              { name: 'Tour Virtual', id: 'virtual-tour' },
+              { name: 'Calculadora', id: 'tuition-calculator' },
+              { name: 'Visita', id: 'visit-scheduler' },
               { name: 'Contato', id: 'contact' }
             ].map((item, index) => (
               <motion.button
@@ -103,6 +107,10 @@ export default function Navigation() {
             { name: 'Programas', id: 'programs' },
             { name: 'Professores', id: 'faculty' },
             { name: 'Vida Estudantil', id: 'life' },
+            { name: 'Galeria', id: 'gallery' },
+            { name: 'Tour Virtual', id: 'virtual-tour' },
+            { name: 'Calculadora', id: 'tuition-calculator' },
+            { name: 'Visita', id: 'visit-scheduler' },
             { name: 'Contato', id: 'contact' }
           ].map((item) => (
             <button

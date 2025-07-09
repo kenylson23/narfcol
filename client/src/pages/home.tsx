@@ -5,6 +5,10 @@ import AboutSection from "@/components/about-section";
 import ProgramsSection from "@/components/programs-section";
 import FacultySection from "@/components/faculty-section";
 import StudentLifeSection from "@/components/student-life-section";
+import GallerySection from "@/components/gallery-section";
+import VirtualTourSection from "@/components/virtual-tour-section";
+import TuitionCalculator from "@/components/tuition-calculator";
+import VisitScheduler from "@/components/visit-scheduler";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import ScrollToTop from "@/components/scroll-to-top";
@@ -40,6 +44,10 @@ export default function Home() {
       <ProgramsSection />
       <FacultySection />
       <StudentLifeSection />
+      <GallerySection />
+      <VirtualTourSection />
+      <TuitionCalculator />
+      <VisitScheduler />
       <ContactSection />
       <Footer />
       <ScrollToTop />

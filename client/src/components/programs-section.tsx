@@ -106,7 +106,6 @@ export default function ProgramsSection() {
               <motion.div 
                 className="text-4xl text-primary mb-4 relative"
                 whileHover={{ scale: 1.2, rotate: 10 }}
-                transition={{ duration: 0.3 }}
                 animate={{
                   scale: [1, 1.05, 1],
                   rotateY: [0, 5, 0],
