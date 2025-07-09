@@ -56,7 +56,7 @@ export default function StudentLifeSection() {
           <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-6">
             Vida <span className="text-primary">Estudantil</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             Uma experiência educacional rica e diversificada que vai além da sala de aula, promovendo crescimento pessoal, liderança e cidadania ativa.
           </p>
         </motion.div>
@@ -86,7 +86,7 @@ export default function StudentLifeSection() {
             viewport={{ once: true }}
           >
             <h3 className="text-3xl font-bold text-secondary mb-6">Atividades Extracurriculares</h3>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-gray-700 mb-6">
               Oferecemos mais de 30 clubes e atividades extracurriculares que permitem aos estudantes explorar seus interesses, desenvolver talentos e construir amizades duradouras.
             </p>
             <div className="grid grid-cols-2 gap-4">
@@ -101,7 +101,7 @@ export default function StudentLifeSection() {
                   whileHover={{ scale: 1.05 }}
                 >
                   <i className={`${activity.icon} text-primary text-xl`}></i>
-                  <span className="text-gray-700">{activity.label}</span>
+                  <span className="text-gray-800">{activity.label}</span>
                 </motion.div>
               ))}
             </div>
@@ -133,7 +133,7 @@ export default function StudentLifeSection() {
             viewport={{ once: true }}
           >
             <h3 className="text-3xl font-bold text-secondary mb-6">Instalações Modernas</h3>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-gray-700 mb-6">
               Nosso campus oferece instalações de última geração projetadas para apoiar todos os aspectos da experiência educacional e promover um ambiente de aprendizagem inspirador.
             </p>
             <div className="space-y-4">
@@ -152,7 +152,7 @@ export default function StudentLifeSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-secondary">{facility.title}</h4>
-                    <p className="text-gray-600">{facility.description}</p>
+                    <p className="text-gray-700">{facility.description}</p>
                   </div>
                 </motion.div>
               ))}

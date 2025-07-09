@@ -53,7 +53,7 @@ export default function ProgramsSection() {
           <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-6">
             Nossos <span className="text-primary">Programas</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             Oferecemos uma ampla gama de programas educacionais desenhados para desenvolver o potencial máximo de cada estudante em todas as fases da sua jornada acadêmica.
           </p>
         </motion.div>
@@ -79,11 +79,11 @@ export default function ProgramsSection() {
               
               <h3 className="text-2xl font-bold text-secondary mb-4">{program.title}</h3>
               
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-700 mb-6">
                 {program.description}
               </p>
               
-              <ul className="text-sm text-gray-600 space-y-2 mb-6">
+              <ul className="text-sm text-gray-700 space-y-2 mb-6">
                 {program.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-center">
                     <i className="fas fa-check text-success mr-2"></i> 

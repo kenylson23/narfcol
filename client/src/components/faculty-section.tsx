@@ -49,7 +49,7 @@ export default function FacultySection() {
           <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-6">
             Nosso <span className="text-primary">Corpo Docente</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             Professores altamente qualificados e dedicados, comprometidos com a excelência educacional e o desenvolvimento integral de cada estudante.
           </p>
         </motion.div>
@@ -88,7 +88,7 @@ export default function FacultySection() {
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-secondary mb-1">{teacher.name}</h3>
                   <p className="text-primary font-medium mb-3">{teacher.position}</p>
-                  <p className="text-gray-600 text-sm">{teacher.education}</p>
+                  <p className="text-gray-700 text-sm">{teacher.education}</p>
                 </div>
               </div>
             </motion.div>

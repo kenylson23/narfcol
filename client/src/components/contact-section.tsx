@@ -185,7 +185,7 @@ export default function ContactSection() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 mb-2">
                       Nome Completo *
                     </label>
                     <Input
@@ -197,7 +197,7 @@ export default function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 mb-2">
                       Email *
                     </label>
                     <Input
@@ -212,7 +212,7 @@ export default function ContactSection() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 mb-2">
                       Telefone
                     </label>
                     <Input
@@ -223,7 +223,7 @@ export default function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-800 mb-2">
                       Assunto *
                     </label>
                     <Select value={formData.subject} onValueChange={(value) => handleInputChange('subject', value)}>
@@ -242,7 +242,7 @@ export default function ContactSection() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
                     Mensagem *
                   </label>
                   <Textarea

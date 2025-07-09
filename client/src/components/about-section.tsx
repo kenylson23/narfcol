@@ -22,10 +22,10 @@ export default function AboutSection() {
             <h2 className="text-4xl md:text-5xl font-bold text-secondary mb-6">
               Sobre o <span className="text-primary">Narfive</span>
             </h2>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
               O Colégio Narfive é uma instituição de ensino de prestígio em Angola, dedicada a formar cidadãos íntegros e preparados para os desafios do século XXI. Com mais de duas décadas de excelência educacional, somos reconhecidos pela qualidade do nosso ensino e pelo desenvolvimento integral dos nossos estudantes.
             </p>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
               Nossa missão é proporcionar uma educação holística que combina rigor acadêmico, valores éticos e desenvolvimento das competências do futuro, preparando nossos alunos para se tornarem líderes em suas comunidades e no mundo.
             </p>
             
@@ -41,7 +41,7 @@ export default function AboutSection() {
                   whileHover={{ scale: 1.05 }}
                 >
                   <div className="text-3xl font-bold text-primary mb-2">{stat.number}</div>
-                  <div className="text-gray-600">{stat.label}</div>
+                  <div className="text-gray-700">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
