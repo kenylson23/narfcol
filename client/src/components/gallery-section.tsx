@@ -149,12 +149,12 @@ export default function GallerySection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="flex flex-wrap gap-4 p-2 bg-white rounded-full shadow-lg">
+          <div className="flex flex-wrap gap-2 sm:gap-4 p-2 bg-white rounded-full shadow-lg">
             {categories.map((category) => (
               <motion.button
                 key={category.id}
                 onClick={() => setCurrentCategory(category.id)}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                className={`px-3 sm:px-6 py-2 sm:py-3 rounded-full font-medium text-sm sm:text-base transition-all duration-300 ${
                   currentCategory === category.id
                     ? 'bg-primary text-white shadow-lg'
                     : 'text-gray-600 hover:bg-gray-100'

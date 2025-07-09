@@ -41,7 +41,7 @@ export default function Navigation() {
             </motion.div>
           </motion.div>
           
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden xl:flex space-x-8">
             {[
               { name: 'Início', id: 'home' },
               { name: 'Sobre Nós', id: 'about' },
@@ -79,7 +79,7 @@ export default function Navigation() {
             ))}
           </div>
 
-          <div className="md:hidden">
+          <div className="xl:hidden">
             <button 
               className={`transition-colors duration-300 ${
                 isScrolled ? 'text-gray-900 hover:text-primary' : 'text-white hover:text-primary'
@@ -94,7 +94,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       <motion.div 
-        className={`md:hidden glass-morphism ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+        className={`xl:hidden glass-morphism ${isMobileMenuOpen ? 'block' : 'hidden'}`}
         initial={{ opacity: 0, height: 0 }}
         animate={{ opacity: isMobileMenuOpen ? 1 : 0, height: isMobileMenuOpen ? 'auto' : 0 }}
         transition={{ duration: 0.3 }}

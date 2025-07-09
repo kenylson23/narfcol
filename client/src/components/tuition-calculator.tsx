@@ -213,12 +213,12 @@ export default function TuitionCalculator() {
                 <label className="block text-sm font-medium text-gray-700 mb-4">
                   Atividades Extracurriculares (Opcional)
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {activities.map((activity) => (
                     <motion.button
                       key={activity.id}
                       onClick={() => toggleActivity(activity.id)}
-                      className={`p-3 rounded-lg border transition-all duration-300 ${
+                      className={`p-2 sm:p-3 rounded-lg border transition-all duration-300 ${
                         extraActivities.includes(activity.id)
                           ? 'bg-primary text-white border-primary'
                           : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-primary'
@@ -226,8 +226,8 @@ export default function TuitionCalculator() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <div className="text-lg mb-1">{activity.icon}</div>
-                      <div className="text-sm font-medium">{activity.name}</div>
+                      <div className="text-base sm:text-lg mb-1">{activity.icon}</div>
+                      <div className="text-xs sm:text-sm font-medium">{activity.name}</div>
                       <div className="text-xs opacity-80">{formatCurrency(activity.cost)}</div>
                     </motion.button>
                   ))}

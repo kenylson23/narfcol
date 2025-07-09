@@ -89,7 +89,7 @@ export default function StudentLifeSection() {
             <p className="text-lg text-gray-700 mb-6">
               Oferecemos mais de 30 clubes e atividades extracurriculares que permitem aos estudantes explorar seus interesses, desenvolver talentos e construir amizades duradouras.
             </p>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {activities.map((activity, index) => (
                 <motion.div
                   key={index}

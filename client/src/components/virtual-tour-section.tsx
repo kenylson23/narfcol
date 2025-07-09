@@ -108,7 +108,7 @@ export default function VirtualTourSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Location List */}
           <motion.div 
             className="lg:col-span-1"
@@ -123,7 +123,7 @@ export default function VirtualTourSection() {
                 <motion.button
                   key={location.id}
                   onClick={() => goToLocation(index)}
-                  className={`w-full text-left p-4 rounded-lg transition-all duration-300 ${
+                  className={`w-full text-left p-3 sm:p-4 rounded-lg transition-all duration-300 ${
                     currentLocation === index
                       ? 'bg-primary text-white shadow-lg'
                       : 'bg-gray-100 hover:bg-gray-200 text-gray-700'

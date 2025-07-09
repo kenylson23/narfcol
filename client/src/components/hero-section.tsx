@@ -198,7 +198,7 @@ export default function HeroSection() {
         style={{ y: textY }}
       >
         <motion.h1 
-          className="text-5xl md:text-7xl font-bold text-white mb-6 text-glow"
+          className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-6 text-glow"
           initial={{ opacity: 0, y: 60, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -208,7 +208,7 @@ export default function HeroSection() {
         </motion.h1>
         
         <motion.p 
-          className="text-xl md:text-2xl text-white mb-8 drop-shadow-lg"
+          className="text-lg sm:text-xl md:text-2xl text-white mb-8 drop-shadow-lg px-4"
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
@@ -223,7 +223,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         >
           <motion.button 
-            className="bg-primary hover:bg-primary/80 text-white px-8 py-4 rounded-full text-lg font-semibold interactive-hover immersive-glow section-transition relative overflow-hidden"
+            className="bg-primary hover:bg-primary/80 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold interactive-hover immersive-glow section-transition relative overflow-hidden"
             onClick={() => scrollToSection('programs')}
             whileHover={{ 
               scale: 1.1,
@@ -242,7 +242,7 @@ export default function HeroSection() {
           </motion.button>
           
           <motion.button 
-            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-full text-lg font-semibold interactive-hover section-transition relative overflow-hidden"
+            className="border-2 border-white text-white hover:bg-white hover:text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold interactive-hover section-transition relative overflow-hidden"
             whileHover={{ 
               scale: 1.1,
               rotateY: -5,

@@ -65,6 +65,32 @@
   html {
     scroll-behavior: smooth;
   }
+  
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .text-responsive {
+      font-size: clamp(1rem, 4vw, 1.5rem);
+    }
+    
+    .heading-responsive {
+      font-size: clamp(2rem, 8vw, 3rem);
+    }
+    
+    /* Better touch targets */
+    .interactive-hover {
+      min-height: 44px;
+    }
+    
+    /* Reduce motion for better performance */
+    .enhanced-parallax {
+      transform: none !important;
+    }
+    
+    /* Improve scroll performance */
+    .overflow-x-hidden {
+      overflow-x: hidden;
+    }
+  }
 }
 
 @layer components {

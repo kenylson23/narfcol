@@ -44,7 +44,7 @@ export default function AboutSection() {
               Nossa missão é proporcionar uma educação holística que combina rigor acadêmico, valores éticos e desenvolvimento das competências do futuro, preparando nossos alunos para se tornarem líderes em suas comunidades e no mundo.
             </p>
             
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
