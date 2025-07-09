@@ -23,7 +23,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'glass-morphism' : ''}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'glass-morphism backdrop-blur-md' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <motion.div 
@@ -32,7 +32,7 @@ export default function Navigation() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-2xl font-bold text-white">
+            <div className={`text-2xl font-bold transition-colors duration-300 ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
               Colégio <span className="text-primary">Narfive</span>
             </div>
           </motion.div>
@@ -49,7 +49,9 @@ export default function Navigation() {
               <motion.button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-white hover:text-primary transition-colors duration-300 font-medium"
+                className={`transition-colors duration-300 font-medium ${
+                  isScrolled ? 'text-gray-900 hover:text-primary' : 'text-white hover:text-primary'
+                }`}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -62,7 +64,9 @@ export default function Navigation() {
 
           <div className="md:hidden">
             <button 
-              className="text-white hover:text-primary transition-colors duration-300"
+              className={`transition-colors duration-300 ${
+                isScrolled ? 'text-gray-900 hover:text-primary' : 'text-white hover:text-primary'
+              }`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <i className="fas fa-bars text-xl"></i>
