@@ -168,12 +168,12 @@ export default function ContactSection() {
             transition={{ duration: 1.2, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <div className="glass-morphism rounded-2xl p-8 border border-white/20 immersive-glow section-transition">
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 border border-white/30 shadow-2xl section-transition">
               <motion.div 
-                className="absolute -top-2 -right-2 w-6 h-6 bg-white/30 rounded-full pulse-glow"
+                className="absolute -top-2 -right-2 w-6 h-6 bg-primary/40 rounded-full pulse-glow"
                 animate={{
                   scale: [1, 1.5, 1],
-                  opacity: [0.3, 0.8, 0.3],
+                  opacity: [0.4, 0.8, 0.4],
                 }}
                 transition={{
                   duration: 2,
@@ -181,7 +181,7 @@ export default function ContactSection() {
                   ease: "easeInOut"
                 }}
               />
-              <h3 className="text-2xl font-bold text-white mb-8">Informações de Contato</h3>
+              <h3 className="text-2xl font-bold text-secondary mb-8">Informações de Contato</h3>
               
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
@@ -193,30 +193,30 @@ export default function ContactSection() {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     viewport={{ once: true }}
                   >
-                    <div className="bg-white/20 p-3 rounded-full">
-                      <i className={`${info.icon} text-white`}></i>
+                    <div className="bg-primary/20 p-3 rounded-full">
+                      <i className={`${info.icon} text-primary`}></i>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-white mb-1">{info.title}</h4>
-                      <p className="text-white/90 whitespace-pre-line">{info.content}</p>
+                      <h4 className="font-semibold text-secondary mb-1">{info.title}</h4>
+                      <p className="text-gray-700 whitespace-pre-line">{info.content}</p>
                     </div>
                   </motion.div>
                 ))}
               </div>
 
               {/* Social Media */}
-              <div className="mt-8 pt-8 border-t border-white/20">
-                <h4 className="font-semibold text-white mb-4">Siga-nos</h4>
+              <div className="mt-8 pt-8 border-t border-gray-200">
+                <h4 className="font-semibold text-secondary mb-4">Siga-nos</h4>
                 <div className="flex space-x-4">
                   {socialLinks.map((social, index) => (
                     <motion.a
                       key={index}
                       href={social.href}
-                      className="bg-white/20 p-3 rounded-full hover:bg-white/30 transition-colors duration-300"
+                      className="bg-primary/20 p-3 rounded-full hover:bg-primary/30 transition-colors duration-300"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      <i className={`${social.icon} text-white`}></i>
+                      <i className={`${social.icon} text-primary`}></i>
                     </motion.a>
                   ))}
                 </div>
