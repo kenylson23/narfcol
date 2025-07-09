@@ -1,8 +1,12 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function HeroSection() {
   const ref = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -23,20 +27,66 @@ export default function HeroSection() {
     }
   };
 
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
   return (
     <section ref={ref} id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Layer - Slowest Parallax */}
+      {/* Video Background */}
       <motion.div 
-        className="absolute inset-0 parallax-bg" 
-        style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080')",
-          y: backgroundY
-        }}
+        className="absolute inset-0"
+        style={{ y: backgroundY }}
+      >
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          onLoadedData={() => setIsVideoLoaded(true)}
+          onError={(e) => {
+            // Fallback to image if video fails to load
+            const target = e.target as HTMLVideoElement;
+            target.style.display = 'none';
+            const fallbackDiv = target.nextElementSibling as HTMLElement;
+            if (fallbackDiv) fallbackDiv.style.display = 'block';
+          }}
+        >
+          <source src="https://videos.pexels.com/video-files/3045163/3045163-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+          <source src="https://videos.pexels.com/video-files/3045163/3045163-hd_1920_1080_25fps.mp4" type="video/mp4" />
+          <source src="https://videos.pexels.com/video-files/5198157/5198157-hd_1920_1080_25fps.mp4" type="video/mp4" />
+        </video>
+        
+        {/* Fallback Image */}
+        <div 
+          className="absolute inset-0 w-full h-full bg-cover bg-center"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080')",
+            display: 'none'
+          }}
+        />
+      </motion.div>
+      
+      {/* Video Loading Overlay */}
+      <motion.div 
+        className="absolute inset-0 video-overlay"
+        initial={{ opacity: isVideoLoaded ? 0 : 1 }}
+        animate={{ opacity: isVideoLoaded ? 0 : 1 }}
+        transition={{ duration: 1 }}
       />
       
       {/* Secondary Background Layer */}
       <motion.div 
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: "url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&h=1080')",
           backgroundSize: "cover",
@@ -180,13 +230,38 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
 
+      {/* Video Controls */}
+      {isVideoLoaded && (
+        <motion.button
+          className="absolute top-8 right-8 z-20 bg-black/20 hover:bg-black/40 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm"
+          onClick={toggleVideo}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          {isVideoPlaying ? (
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+          ) : (
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+            </svg>
+          )}
+        </motion.button>
+      )}
+
       {/* Scroll Indicator */}
       <motion.div 
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 1.5, repeat: Infinity }}
       >
-        <i className="fas fa-chevron-down text-white text-2xl"></i>
+        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
       </motion.div>
     </section>
   );
