@@ -99,45 +99,55 @@ export default function HeroSection() {
       
       {/* Parallax Floating Elements - Different Layers */}
       <motion.div 
-        className="absolute top-20 left-20 w-20 h-20 bg-primary opacity-20 rounded-full"
+        className="absolute top-20 left-20 w-20 h-20 bg-primary opacity-30 rounded-full immersive-glow"
         style={{ y: floatingY2 }}
         animate={{ 
           rotate: [0, 180, 360],
-          scale: [1, 1.1, 1]
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.6, 0.3]
         }}
         transition={{ 
           duration: 8, 
           repeat: Infinity,
           ease: "easeInOut"
         }}
+        whileHover={{ scale: 1.5, opacity: 0.8 }}
       />
       
       <motion.div 
-        className="absolute top-40 right-32 w-16 h-16 bg-white opacity-15 rounded-full"
+        className="absolute top-40 right-32 w-16 h-16 bg-white opacity-25 rounded-full"
         style={{ y: floatingY1 }}
         animate={{ 
           x: [0, 20, 0],
-          rotate: [0, -180, -360]
+          rotate: [0, -180, -360],
+          boxShadow: [
+            "0 0 20px rgba(255, 255, 255, 0.3)",
+            "0 0 40px rgba(255, 255, 255, 0.6)",
+            "0 0 20px rgba(255, 255, 255, 0.3)"
+          ]
         }}
         transition={{ 
           duration: 6, 
           repeat: Infinity,
           ease: "easeInOut"
         }}
+        whileHover={{ scale: 1.6, opacity: 0.8 }}
       />
       
       <motion.div 
-        className="absolute bottom-40 left-32 w-24 h-24 bg-primary opacity-15 rounded-full"
+        className="absolute bottom-40 left-32 w-24 h-24 bg-primary opacity-25 rounded-full immersive-glow"
         style={{ y: floatingY3 }}
         animate={{ 
           scale: [1, 1.3, 1],
-          opacity: [0.15, 0.25, 0.15]
+          opacity: [0.25, 0.5, 0.25],
+          rotate: [0, 45, 90, 45, 0]
         }}
         transition={{ 
           duration: 4, 
           repeat: Infinity,
           ease: "easeInOut"
         }}
+        whileHover={{ scale: 1.4, opacity: 0.7 }}
       />
       
       {/* Additional Parallax Elements */}
@@ -188,12 +198,13 @@ export default function HeroSection() {
         style={{ y: textY }}
       >
         <motion.h1 
-          className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-2xl"
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-5xl md:text-7xl font-bold text-white mb-6 text-glow"
+          initial={{ opacity: 0, y: 60, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          whileHover={{ scale: 1.02 }}
         >
-          Colégio <span className="text-primary drop-shadow-lg">Narfive</span>
+          Colégio <span className="text-primary text-glow">Narfive</span>
         </motion.h1>
         
         <motion.p 
@@ -212,18 +223,27 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         >
           <motion.button 
-            className="bg-primary hover:bg-primary/80 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
+            className="bg-primary hover:bg-primary/80 text-white px-8 py-4 rounded-full text-lg font-semibold interactive-hover immersive-glow"
             onClick={() => scrollToSection('programs')}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ 
+              scale: 1.08,
+              boxShadow: "0 0 30px rgba(106, 90, 205, 0.6)"
+            }}
             whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             Explore Nossos Programas
           </motion.button>
           
           <motion.button 
-            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105"
-            whileHover={{ scale: 1.05 }}
+            className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-full text-lg font-semibold interactive-hover"
+            whileHover={{ 
+              scale: 1.08,
+              backgroundColor: "rgba(255, 255, 255, 0.95)",
+              boxShadow: "0 0 30px rgba(255, 255, 255, 0.4)"
+            }}
             whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             Tour Virtual
           </motion.button>
@@ -253,15 +273,63 @@ export default function HeroSection() {
         </motion.button>
       )}
 
-      {/* Scroll Indicator */}
+      {/* Particle System */}
+      {[...Array(12)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-white opacity-40 rounded-full"
+          style={{
+            left: `${15 + i * 7}%`,
+            top: `${30 + Math.sin(i * 0.5) * 40}%`,
+          }}
+          animate={{
+            y: [-30, -80, -30],
+            x: [0, Math.sin(i) * 20, 0],
+            opacity: [0.4, 0.9, 0.4],
+            scale: [1, 1.8, 1],
+          }}
+          transition={{
+            duration: 5 + i * 0.3,
+            repeat: Infinity,
+            delay: i * 0.4,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+
+      {/* Enhanced Scroll Indicator */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
       >
-        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
+        <motion.div
+          className="text-white text-sm mb-2 opacity-80"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          Descubra mais
+        </motion.div>
+        
+        <motion.div
+          className="flex flex-col items-center cursor-pointer"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          whileHover={{ scale: 1.2 }}
+          onClick={() => scrollToSection('about')}
+        >
+          <motion.div 
+            className="w-6 h-10 border-2 border-white rounded-full flex justify-center relative overflow-hidden"
+            whileHover={{ boxShadow: "0 0 20px rgba(255, 255, 255, 0.6)" }}
+          >
+            <motion.div
+              className="w-1 h-2 bg-white rounded-full mt-2"
+              animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          </motion.div>
+        </motion.div>
       </motion.div>
     </section>
   );

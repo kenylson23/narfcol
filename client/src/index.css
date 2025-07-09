@@ -76,12 +76,41 @@
   }
 
   .hero-gradient {
-    background: linear-gradient(135deg, rgba(105, 89, 205, 0.85) 0%, rgba(30, 41, 59, 0.8) 100%);
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(106, 90, 205, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
+      linear-gradient(135deg, rgba(106, 90, 205, 0.9) 0%, rgba(72, 61, 139, 0.85) 50%, rgba(25, 25, 112, 0.9) 100%);
   }
 
   .video-overlay {
-    background: rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(1px);
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(0.5px);
+  }
+
+  .immersive-glow {
+    box-shadow: 
+      0 0 50px rgba(106, 90, 205, 0.3),
+      0 0 100px rgba(106, 90, 205, 0.1),
+      inset 0 0 50px rgba(255, 255, 255, 0.05);
+  }
+
+  .interactive-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .interactive-hover:hover {
+    transform: translateY(-8px) rotateX(5deg);
+    box-shadow: 
+      0 20px 40px rgba(106, 90, 205, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .text-glow {
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.8),
+      0 0 20px rgba(106, 90, 205, 0.4),
+      0 0 30px rgba(106, 90, 205, 0.2);
   }
 
   .parallax-bg {
@@ -126,6 +155,35 @@
 
   .animate-bounce-slow {
     animation: bounce 2s ease-in-out infinite;
+  }
+
+  .magnetic-hover {
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+
+  .magnetic-hover:hover {
+    transform: translate3d(0, -2px, 0) scale(1.02);
+  }
+
+  .depth-shadow {
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .depth-shadow-lg {
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .immersive-section {
+    background: linear-gradient(135deg, 
+      rgba(248, 250, 252, 0.8) 0%, 
+      rgba(241, 245, 249, 0.9) 100%);
+    backdrop-filter: blur(10px);
   }
 }
 

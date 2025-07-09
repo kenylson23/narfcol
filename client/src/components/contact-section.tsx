@@ -128,7 +128,7 @@ export default function ContactSection() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="glass-morphism rounded-2xl p-8 border border-white/20">
+            <div className="glass-morphism rounded-2xl p-8 border border-white/20 immersive-glow">
               <h3 className="text-2xl font-bold text-white mb-8">Informações de Contato</h3>
               
               <div className="space-y-6">

@@ -62,12 +62,16 @@ export default function ProgramsSection() {
           {programs.map((program, index) => (
             <motion.div
               key={index}
-              className="group bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 transform hover:scale-105 hover:shadow-2xl transition-all duration-500 scroll-reveal"
+              className="group bg-gradient-to-br from-primary/5 to-primary/15 rounded-2xl p-8 interactive-hover immersive-glow magnetic-hover depth-shadow-lg scroll-reveal"
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.08,
+                rotateY: 5,
+                boxShadow: "0 25px 50px rgba(106, 90, 205, 0.25)"
+              }}
             >
               <motion.div 
                 className="text-4xl text-primary mb-4"
