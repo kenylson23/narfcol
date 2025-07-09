@@ -3,7 +3,6 @@ import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
 import AboutSection from "@/components/about-section";
 import ProgramsSection from "@/components/programs-section";
-import FacultySection from "@/components/faculty-section";
 import StudentLifeSection from "@/components/student-life-section";
 import GallerySection from "@/components/gallery-section";
 import VirtualTourSection from "@/components/virtual-tour-section";
@@ -42,7 +41,6 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ProgramsSection />
-      <FacultySection />
       <StudentLifeSection />
       <GallerySection />
       <VirtualTourSection />
