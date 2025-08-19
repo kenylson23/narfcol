@@ -9,7 +9,9 @@ export default function TuitionCalculator() {
   const [selectedGrade, setSelectedGrade] = useState("");
   const [selectedPayment, setSelectedPayment] = useState("");
   const [extraActivities, setExtraActivities] = useState<string[]>([]);
-  const [totalCost, setTotalCost] = useState(0);
+  const [initialCosts, setInitialCosts] = useState(0);
+  const [recurringMonthlyCosts, setRecurringMonthlyCosts] = useState(0);
+  const [recurringAnnualCosts, setRecurringAnnualCosts] = useState(0);
   const [showResults, setShowResults] = useState(false);
 
   const programs = {
@@ -78,54 +80,59 @@ export default function TuitionCalculator() {
     return programs[selectedProgram as keyof typeof programs].grades;
   };
 
+  // Initial costs structure
+  const initialCostsStructure = {
+    enrollment: 45000,      // Matrícula
+    confirmation: 25000,    // Confirmação
+    insurance: 15000,       // Seguro
+    uniforms: 35000,        // Uniformes
+    card: 5000              // Cartão
+  };
+
   const paymentPlans = [
     { 
       id: "monthly", 
       name: "Pagamento Mensal", 
       discount: 0, 
-      installments: 10, 
-      description: "10 mensalidades de setembro a junho",
-      additionalFees: 5000
+      installments: 9, 
+      description: "9 mensalidades durante o ano letivo",
+      additionalFees: 0
     },
     { 
       id: "quarterly", 
       name: "Pagamento Trimestral", 
       discount: 0.03, 
       installments: 3, 
-      description: "3 pagamentos por ano letivo",
-      additionalFees: 2000
+      description: "3 pagamentos trimestrais",
+      additionalFees: 0
     },
     { 
       id: "semester", 
       name: "Pagamento Semestral", 
       discount: 0.06, 
       installments: 2, 
-      description: "2 pagamentos por ano letivo",
-      additionalFees: 1000
-    },
-    { 
-      id: "annual", 
-      name: "Pagamento Anual", 
-      discount: 0.10, 
-      installments: 1, 
-      description: "Pagamento único no início do ano",
+      description: "2 pagamentos semestrais",
       additionalFees: 0
     }
   ];
 
+  // Transport options (separate from activities)
+  const transportOptions = [
+    {
+      id: "transport",
+      name: "Transporte Escolar",
+      monthlyCost: 45000,
+      icon: "🚌",
+      description: "Transporte casa-escola-casa com segurança"
+    }
+  ];
+
+  // Extra activities (monthly cost)
   const activities = [
-    { 
-      id: "sports", 
-      name: "Educação Física e Desportos", 
-      cost: 18000, 
-      icon: "⚽", 
-      description: "Futebol, basquetebol, voleibol e atletismo",
-      category: "Desporto"
-    },
     { 
       id: "swimming", 
       name: "Natação", 
-      cost: 35000, 
+      monthlyCost: 35000, 
       icon: "🏊", 
       description: "Aulas de natação na piscina do colégio",
       category: "Desporto"
@@ -133,7 +140,7 @@ export default function TuitionCalculator() {
     { 
       id: "music", 
       name: "Música e Canto Coral", 
-      cost: 25000, 
+      monthlyCost: 25000, 
       icon: "🎵", 
       description: "Piano, violão, canto e teoria musical",
       category: "Arte"
@@ -141,7 +148,7 @@ export default function TuitionCalculator() {
     { 
       id: "art", 
       name: "Artes Visuais e Plásticas", 
-      cost: 22000, 
+      monthlyCost: 22000, 
       icon: "🎨", 
       description: "Desenho, pintura e escultura",
       category: "Arte"
@@ -149,7 +156,7 @@ export default function TuitionCalculator() {
     { 
       id: "english", 
       name: "Inglês Avançado", 
-      cost: 28000, 
+      monthlyCost: 28000, 
       icon: "🇬🇧", 
       description: "Preparação para certificações internacionais",
       category: "Idiomas"
@@ -157,7 +164,7 @@ export default function TuitionCalculator() {
     { 
       id: "french", 
       name: "Francês", 
-      cost: 26000, 
+      monthlyCost: 26000, 
       icon: "🇫🇷", 
       description: "Língua francesa desde o nível básico",
       category: "Idiomas"
@@ -165,7 +172,7 @@ export default function TuitionCalculator() {
     { 
       id: "informatics", 
       name: "Informática e Programação", 
-      cost: 30000, 
+      monthlyCost: 30000, 
       icon: "💻", 
       description: "Office, programação básica e design gráfico",
       category: "Tecnologia"
@@ -173,7 +180,7 @@ export default function TuitionCalculator() {
     { 
       id: "robotics", 
       name: "Robótica e Ciências", 
-      cost: 38000, 
+      monthlyCost: 38000, 
       icon: "🤖", 
       description: "Experimentos científicos e construção de robots",
       category: "Tecnologia"
@@ -181,7 +188,7 @@ export default function TuitionCalculator() {
     { 
       id: "drama", 
       name: "Teatro e Expressão Dramática", 
-      cost: 20000, 
+      monthlyCost: 20000, 
       icon: "🎭", 
       description: "Desenvolvimento da expressão oral e corporal",
       category: "Arte"
@@ -189,23 +196,15 @@ export default function TuitionCalculator() {
     { 
       id: "study-support", 
       name: "Apoio ao Estudo", 
-      cost: 15000, 
+      monthlyCost: 15000, 
       icon: "📚", 
       description: "Reforço escolar em horário pós-letivo",
       category: "Apoio"
     },
     { 
-      id: "transport", 
-      name: "Transporte Escolar", 
-      cost: 45000, 
-      icon: "🚌", 
-      description: "Transporte casa-escola-casa com segurança",
-      category: "Serviços"
-    },
-    { 
       id: "meals", 
       name: "Alimentação Completa", 
-      cost: 35000, 
+      monthlyCost: 35000, 
       icon: "🍽️", 
       description: "Lanche da manhã, almoço e lanche da tarde",
       category: "Serviços"
@@ -229,24 +228,35 @@ export default function TuitionCalculator() {
     
     if (!program || !grade || !paymentPlan) return;
 
-    // Monthly cost becomes annual cost (10 months)
-    let annualBaseCost = grade.monthlyCost * 10;
+    // 🔹 PARTE 1 - PAGAMENTO INICIAL (uma única vez)
+    const totalInitialCosts = Object.values(initialCostsStructure).reduce((sum, cost) => sum + cost, 0);
     
-    // Apply discount
-    const discountAmount = annualBaseCost * paymentPlan.discount;
-    const discountedCost = annualBaseCost - discountAmount;
+    // 🔹 PARTE 2 - PAGAMENTO RECORRENTE (mensal)
+    let monthlyRecurring = grade.monthlyCost; // Mensalidade base
     
-    // Add extra activities (also annual)
-    const activitiesCost = extraActivities.reduce((total, activityId) => {
-      const activity = activities.find(a => a.id === activityId);
-      return total + (activity ? activity.cost * 10 : 0); // Activities are also for 10 months
-    }, 0);
+    // Add transport if selected
+    const hasTransport = extraActivities.includes('transport');
+    if (hasTransport) {
+      monthlyRecurring += transportOptions[0].monthlyCost;
+    }
     
-    // Add payment plan fees
-    const additionalFees = paymentPlan.additionalFees || 0;
+    // Add extra activities (excluding transport)
+    const activitiesCost = extraActivities
+      .filter(activityId => activityId !== 'transport')
+      .reduce((total, activityId) => {
+        const activity = activities.find(a => a.id === activityId);
+        return total + (activity ? activity.monthlyCost : 0);
+      }, 0);
     
-    const total = discountedCost + activitiesCost + additionalFees;
-    setTotalCost(total);
+    monthlyRecurring += activitiesCost;
+    
+    // Apply discount to recurring costs
+    const discountAmount = monthlyRecurring * 9 * paymentPlan.discount;
+    const annualRecurringDiscounted = (monthlyRecurring * 9) - discountAmount;
+    
+    setInitialCosts(totalInitialCosts);
+    setRecurringMonthlyCosts(monthlyRecurring);
+    setRecurringAnnualCosts(annualRecurringDiscounted);
     setShowResults(true);
   };
 
@@ -406,9 +416,44 @@ export default function TuitionCalculator() {
                 </Select>
               </div>
 
+              {/* Transport */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Transporte (Opcional)
+                </label>
+                <div className="grid grid-cols-1 gap-3">
+                  {transportOptions.map((transport) => (
+                    <motion.button
+                      key={transport.id}
+                      onClick={() => toggleActivity(transport.id)}
+                      className={`p-3 rounded-lg border transition-all duration-300 ${
+                        extraActivities.includes(transport.id)
+                          ? 'bg-primary text-white border-primary'
+                          : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-primary'
+                      }`}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <span className="text-lg mr-3">{transport.icon}</span>
+                          <div>
+                            <div className="text-sm font-medium text-left">{transport.name}</div>
+                            <div className="text-xs opacity-80 text-left">{transport.description}</div>
+                          </div>
+                        </div>
+                        <div className="text-sm font-semibold">
+                          {formatCurrency(transport.monthlyCost)}/mês
+                        </div>
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+
               {/* Extra Activities */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Atividades Extracurriculares (Opcional)
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -426,7 +471,7 @@ export default function TuitionCalculator() {
                     >
                       <div className="text-base sm:text-lg mb-1">{activity.icon}</div>
                       <div className="text-xs sm:text-sm font-medium">{activity.name}</div>
-                      <div className="text-xs opacity-80">{formatCurrency(activity.cost)}</div>
+                      <div className="text-xs opacity-80">{formatCurrency(activity.monthlyCost)}/mês</div>
                     </motion.button>
                   ))}
                 </div>
@@ -501,37 +546,80 @@ export default function TuitionCalculator() {
                   )}
                 </div>
 
-                {/* Extra Activities */}
+                {/* Selected Extras */}
                 {extraActivities.length > 0 && (
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="font-medium mb-2">Atividades Extras:</div>
-                    {extraActivities.map((activityId) => {
-                      const activity = activities.find(a => a.id === activityId);
-                      return activity ? (
-                        <div key={activityId} className="flex items-center justify-between text-sm">
-                          <span>{activity.icon} {activity.name}</span>
-                          <span className="font-semibold">{formatCurrency(activity.cost)}</span>
-                        </div>
-                      ) : null;
-                    })}
+                    <div className="font-medium mb-2">Serviços e Atividades Selecionados:</div>
+                    <div className="space-y-1">
+                      {extraActivities.map((itemId) => {
+                        // Check if it's transport
+                        const transport = transportOptions.find(t => t.id === itemId);
+                        if (transport) {
+                          return (
+                            <div key={itemId} className="flex items-center justify-between text-sm">
+                              <span>{transport.icon} {transport.name}</span>
+                              <span className="font-semibold text-blue-600">{formatCurrency(transport.monthlyCost)}/mês</span>
+                            </div>
+                          );
+                        }
+                        
+                        // Check if it's an activity
+                        const activity = activities.find(a => a.id === itemId);
+                        if (activity) {
+                          return (
+                            <div key={itemId} className="flex items-center justify-between text-sm">
+                              <span>{activity.icon} {activity.name}</span>
+                              <span className="font-semibold text-green-600">{formatCurrency(activity.monthlyCost)}/mês</span>
+                            </div>
+                          );
+                        }
+                        
+                        return null;
+                      })}
+                    </div>
                   </div>
                 )}
 
                 {/* Total */}
                 <div className="bg-primary/10 rounded-lg p-6 border-2 border-primary/20">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-lg font-bold text-secondary">Total Anual:</span>
-                    <span className="text-2xl font-bold text-primary">
-                      {formatCurrency(totalCost)}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">
-                      Por {getPaymentPlan()?.name.toLowerCase()}:
-                    </span>
-                    <span className="font-semibold text-secondary">
-                      {formatCurrency(totalCost / (getPaymentPlan()?.installments || 1))}
-                    </span>
+                  <div className="space-y-4">
+                    {/* Initial Costs */}
+                    <div className="border-b pb-3">
+                      <div className="text-sm font-medium text-gray-600 mb-2">🔹 Pagamento Inicial (uma vez):</div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-700">Matrícula + Confirmação + Seguro + Uniformes + Cartão</span>
+                        <span className="font-bold text-primary">
+                          {formatCurrency(initialCosts)}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* Recurring Costs */}
+                    <div className="space-y-2">
+                      <div className="text-sm font-medium text-gray-600">🔹 Pagamento Recorrente (9 meses):</div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-700">Por mês:</span>
+                        <span className="font-semibold">
+                          {formatCurrency(recurringMonthlyCosts)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-700">Total 9 meses:</span>
+                        <span className="font-bold text-secondary">
+                          {formatCurrency(recurringAnnualCosts)}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* Grand Total */}
+                    <div className="border-t pt-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-lg font-bold text-secondary">TOTAL GERAL:</span>
+                        <span className="text-2xl font-bold text-primary">
+                          {formatCurrency(initialCosts + recurringAnnualCosts)}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
