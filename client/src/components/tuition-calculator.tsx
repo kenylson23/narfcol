@@ -516,7 +516,8 @@ export default function TuitionCalculator() {
                     ))}
                   </div>
                   <p className="text-xs text-blue-700 mt-3 italic">
-                    💬 Valores das atividades extracurriculares definidos por consulta. Entre em contacto para mais informações.
+                    💬 Valores das atividades extracurriculares definidos por consulta.<br/>
+                    📞 Contactos: <strong>943 482 837</strong> / <strong>922 001 213</strong>
                   </p>
                 </div>
               </div>

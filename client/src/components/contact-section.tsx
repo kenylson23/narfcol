@@ -74,13 +74,13 @@ export default function ContactSection() {
   const contactInfo = [
     {
       icon: "fas fa-map-marker-alt",
-      title: "Endereço",
-      content: "Rua da Educação, 123\nLuanda Sul, Angola"
+      title: "Localização",
+      content: "Zango 3A, lado direito da 1ª paragem no sentido Viana Calumbo\nQuadra E1, Rua 6 das Laranjas"
     },
     {
       icon: "fas fa-phone",
-      title: "Telefone",
-      content: "+244 922 345 678"
+      title: "Contactos",
+      content: "943 482 837 / 922 001 213"
     },
     {
       icon: "fas fa-envelope",
