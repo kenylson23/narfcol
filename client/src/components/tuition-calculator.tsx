@@ -14,44 +14,49 @@ export default function TuitionCalculator() {
 
   const programs = [
     { 
-      id: "pre-school", 
-      name: "Pré-escolar (3-5 anos)", 
+      id: "mundo-magico", 
+      name: "Mundo Mágico (Educação Infantil)", 
       baseCost: 85000, 
       icon: "🧸",
-      description: "Educação inicial com metodologia lúdica",
-      enrollmentFee: 25000
+      description: "Pré-escolar e Iniciação - Metodologia lúdica e desenvolvimento integral",
+      enrollmentFee: 25000,
+      grades: "Pré-escolar e Iniciação"
     },
     { 
-      id: "primary", 
-      name: "Ensino Primário (1ª-6ª classe)", 
+      id: "ensino-primario", 
+      name: "Ensino Primário", 
       baseCost: 130000, 
       icon: "🎒",
-      description: "Base sólida em português, matemática e ciências",
-      enrollmentFee: 35000
+      description: "Da 1ª à 6ª Classe - Base sólida em todas as disciplinas fundamentais",
+      enrollmentFee: 35000,
+      grades: "1ª à 6ª Classe"
     },
     { 
-      id: "first-cycle", 
-      name: "I Ciclo do Ensino Secundário (7ª-9ª classe)", 
+      id: "i-ciclo-secundario", 
+      name: "I Ciclo - Ensino Secundário", 
       baseCost: 165000, 
       icon: "📖",
-      description: "Formação geral com disciplinas fundamentais",
-      enrollmentFee: 45000
+      description: "Da 7ª à 9ª Classe - Formação geral com disciplinas fundamentais",
+      enrollmentFee: 45000,
+      grades: "7ª à 9ª Classe"
     },
     { 
-      id: "second-cycle", 
-      name: "II Ciclo do Ensino Secundário (10ª-12ª classe)", 
+      id: "ii-ciclo-puniv", 
+      name: "II Ciclo PUNIV (C.F.B / C.E.J.)", 
       baseCost: 195000, 
       icon: "🎓",
-      description: "Preparação para o ensino superior",
-      enrollmentFee: 55000
+      description: "Da 10ª à 12ª Classe - Cursos Gerais para preparação universitária",
+      enrollmentFee: 55000,
+      grades: "10ª à 12ª Classe"
     },
     { 
-      id: "pre-university", 
-      name: "Curso Pré-Universitário", 
-      baseCost: 240000, 
-      icon: "🏆",
-      description: "Preparação intensiva para exames de admissão",
-      enrollmentFee: 65000
+      id: "medio-tecnico", 
+      name: "Médio Técnico (INFOGEST / CONGEST)", 
+      baseCost: 220000, 
+      icon: "💼",
+      description: "Da 10ª à 13ª Classe - Formação técnica profissional",
+      enrollmentFee: 65000,
+      grades: "10ª à 13ª Classe"
     }
   ];
 
