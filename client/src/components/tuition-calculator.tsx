@@ -13,34 +13,185 @@ export default function TuitionCalculator() {
   const [showResults, setShowResults] = useState(false);
 
   const programs = [
-    { id: "primary", name: "Ensino Primário", baseCost: 120000, icon: "🎒" },
-    { id: "secondary", name: "Ensino Secundário", baseCost: 180000, icon: "📚" },
-    { id: "preparatory", name: "Curso Preparatório", baseCost: 220000, icon: "🎓" }
+    { 
+      id: "pre-school", 
+      name: "Pré-escolar (3-5 anos)", 
+      baseCost: 85000, 
+      icon: "🧸",
+      description: "Educação inicial com metodologia lúdica",
+      enrollmentFee: 25000
+    },
+    { 
+      id: "primary", 
+      name: "Ensino Primário (1ª-6ª classe)", 
+      baseCost: 130000, 
+      icon: "🎒",
+      description: "Base sólida em português, matemática e ciências",
+      enrollmentFee: 35000
+    },
+    { 
+      id: "first-cycle", 
+      name: "I Ciclo do Ensino Secundário (7ª-9ª classe)", 
+      baseCost: 165000, 
+      icon: "📖",
+      description: "Formação geral com disciplinas fundamentais",
+      enrollmentFee: 45000
+    },
+    { 
+      id: "second-cycle", 
+      name: "II Ciclo do Ensino Secundário (10ª-12ª classe)", 
+      baseCost: 195000, 
+      icon: "🎓",
+      description: "Preparação para o ensino superior",
+      enrollmentFee: 55000
+    },
+    { 
+      id: "pre-university", 
+      name: "Curso Pré-Universitário", 
+      baseCost: 240000, 
+      icon: "🏆",
+      description: "Preparação intensiva para exames de admissão",
+      enrollmentFee: 65000
+    }
   ];
 
   const years = [
-    { id: "1", name: "1º Ano", multiplier: 1 },
-    { id: "2", name: "2º Ano", multiplier: 1 },
-    { id: "3", name: "3º Ano", multiplier: 1 },
-    { id: "4", name: "4º Ano", multiplier: 1 },
-    { id: "5", name: "5º Ano", multiplier: 1 },
-    { id: "6", name: "6º Ano", multiplier: 1 }
+    { id: "2024-2025", name: "Ano Letivo 2024/2025", multiplier: 1, status: "atual" },
+    { id: "2025-2026", name: "Ano Letivo 2025/2026", multiplier: 1.05, status: "próximo" }
   ];
 
   const paymentPlans = [
-    { id: "monthly", name: "Mensal", discount: 0, installments: 12 },
-    { id: "quarterly", name: "Trimestral", discount: 0.05, installments: 4 },
-    { id: "semester", name: "Semestral", discount: 0.08, installments: 2 },
-    { id: "annual", name: "Anual", discount: 0.12, installments: 1 }
+    { 
+      id: "monthly", 
+      name: "Pagamento Mensal", 
+      discount: 0, 
+      installments: 10, 
+      description: "10 mensalidades de setembro a junho",
+      additionalFees: 5000
+    },
+    { 
+      id: "quarterly", 
+      name: "Pagamento Trimestral", 
+      discount: 0.03, 
+      installments: 3, 
+      description: "3 pagamentos por ano letivo",
+      additionalFees: 2000
+    },
+    { 
+      id: "semester", 
+      name: "Pagamento Semestral", 
+      discount: 0.06, 
+      installments: 2, 
+      description: "2 pagamentos por ano letivo",
+      additionalFees: 1000
+    },
+    { 
+      id: "annual", 
+      name: "Pagamento Anual", 
+      discount: 0.10, 
+      installments: 1, 
+      description: "Pagamento único no início do ano",
+      additionalFees: 0
+    }
   ];
 
   const activities = [
-    { id: "sports", name: "Atividades Desportivas", cost: 15000, icon: "⚽" },
-    { id: "music", name: "Aulas de Música", cost: 20000, icon: "🎵" },
-    { id: "art", name: "Artes Visuais", cost: 18000, icon: "🎨" },
-    { id: "robotics", name: "Robótica", cost: 25000, icon: "🤖" },
-    { id: "languages", name: "Línguas Estrangeiras", cost: 22000, icon: "🌍" },
-    { id: "drama", name: "Teatro e Drama", cost: 16000, icon: "🎭" }
+    { 
+      id: "sports", 
+      name: "Educação Física e Desportos", 
+      cost: 18000, 
+      icon: "⚽", 
+      description: "Futebol, basquetebol, voleibol e atletismo",
+      category: "Desporto"
+    },
+    { 
+      id: "swimming", 
+      name: "Natação", 
+      cost: 35000, 
+      icon: "🏊", 
+      description: "Aulas de natação na piscina do colégio",
+      category: "Desporto"
+    },
+    { 
+      id: "music", 
+      name: "Música e Canto Coral", 
+      cost: 25000, 
+      icon: "🎵", 
+      description: "Piano, violão, canto e teoria musical",
+      category: "Arte"
+    },
+    { 
+      id: "art", 
+      name: "Artes Visuais e Plásticas", 
+      cost: 22000, 
+      icon: "🎨", 
+      description: "Desenho, pintura e escultura",
+      category: "Arte"
+    },
+    { 
+      id: "english", 
+      name: "Inglês Avançado", 
+      cost: 28000, 
+      icon: "🇬🇧", 
+      description: "Preparação para certificações internacionais",
+      category: "Idiomas"
+    },
+    { 
+      id: "french", 
+      name: "Francês", 
+      cost: 26000, 
+      icon: "🇫🇷", 
+      description: "Língua francesa desde o nível básico",
+      category: "Idiomas"
+    },
+    { 
+      id: "informatics", 
+      name: "Informática e Programação", 
+      cost: 30000, 
+      icon: "💻", 
+      description: "Office, programação básica e design gráfico",
+      category: "Tecnologia"
+    },
+    { 
+      id: "robotics", 
+      name: "Robótica e Ciências", 
+      cost: 38000, 
+      icon: "🤖", 
+      description: "Experimentos científicos e construção de robots",
+      category: "Tecnologia"
+    },
+    { 
+      id: "drama", 
+      name: "Teatro e Expressão Dramática", 
+      cost: 20000, 
+      icon: "🎭", 
+      description: "Desenvolvimento da expressão oral e corporal",
+      category: "Arte"
+    },
+    { 
+      id: "study-support", 
+      name: "Apoio ao Estudo", 
+      cost: 15000, 
+      icon: "📚", 
+      description: "Reforço escolar em horário pós-letivo",
+      category: "Apoio"
+    },
+    { 
+      id: "transport", 
+      name: "Transporte Escolar", 
+      cost: 45000, 
+      icon: "🚌", 
+      description: "Transporte casa-escola-casa com segurança",
+      category: "Serviços"
+    },
+    { 
+      id: "meals", 
+      name: "Alimentação Completa", 
+      cost: 35000, 
+      icon: "🍽️", 
+      description: "Lanche da manhã, almoço e lanche da tarde",
+      category: "Serviços"
+    }
   ];
 
   const toggleActivity = (activityId: string) => {
