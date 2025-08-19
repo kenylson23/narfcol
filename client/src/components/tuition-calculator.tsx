@@ -116,14 +116,55 @@ export default function TuitionCalculator() {
     }
   ];
 
-  // Transport options (separate from activities)
+  // Transport options by zone (separate from activities)
   const transportOptions = [
     {
-      id: "transport",
-      name: "Transporte Escolar",
-      monthlyCost: 45000,
+      id: "transport-zango-0",
+      name: "Transporte Zango 0",
+      monthlyCost: 27000,
       icon: "🚌",
-      description: "Transporte casa-escola-casa com segurança"
+      description: "Transporte casa-escola-casa - Zona Zango 0",
+      zone: "Zango 0"
+    },
+    {
+      id: "transport-zango-1-2",
+      name: "Transporte Zango 1,2",
+      monthlyCost: 27000,
+      icon: "🚌",
+      description: "Transporte casa-escola-casa - Zona Zango 1 e 2",
+      zone: "Zango 1,2"
+    },
+    {
+      id: "transport-zango-3-sector-a",
+      name: "Transporte Zango 3 Sector A",
+      monthlyCost: 27000,
+      icon: "🚌",
+      description: "Transporte casa-escola-casa - Zona Zango 3 Sector A",
+      zone: "Zango 3 Sector A"
+    },
+    {
+      id: "transport-zango-3-sector-b",
+      name: "Transporte Zango 3 Sector B",
+      monthlyCost: 27000,
+      icon: "🚌",
+      description: "Transporte casa-escola-casa - Zona Zango 3 Sector B",
+      zone: "Zango 3 Sector B"
+    },
+    {
+      id: "transport-zango-4",
+      name: "Transporte Zango 4",
+      monthlyCost: 27000,
+      icon: "🚌",
+      description: "Transporte casa-escola-casa - Zona Zango 4",
+      zone: "Zango 4"
+    },
+    {
+      id: "transport-zango-5",
+      name: "Transporte Zango 5",
+      monthlyCost: 28000,
+      icon: "🚌",
+      description: "Transporte casa-escola-casa - Zona Zango 5",
+      zone: "Zango 5"
     }
   ];
 
@@ -234,15 +275,18 @@ export default function TuitionCalculator() {
     // 🔹 PARTE 2 - PAGAMENTO RECORRENTE (mensal)
     let monthlyRecurring = grade.monthlyCost; // Mensalidade base
     
-    // Add transport if selected
-    const hasTransport = extraActivities.includes('transport');
-    if (hasTransport) {
-      monthlyRecurring += transportOptions[0].monthlyCost;
+    // Add transport if selected (only one transport option can be selected)
+    const selectedTransport = extraActivities.find(id => id.startsWith('transport-'));
+    if (selectedTransport) {
+      const transportOption = transportOptions.find(t => t.id === selectedTransport);
+      if (transportOption) {
+        monthlyRecurring += transportOption.monthlyCost;
+      }
     }
     
     // Add extra activities (excluding transport)
     const activitiesCost = extraActivities
-      .filter(activityId => activityId !== 'transport')
+      .filter(activityId => !activityId.startsWith('transport-'))
       .reduce((total, activityId) => {
         const activity = activities.find(a => a.id === activityId);
         return total + (activity ? activity.monthlyCost : 0);
@@ -419,35 +463,53 @@ export default function TuitionCalculator() {
               {/* Transport */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Transporte (Opcional)
+                  Transporte Escolar (Opcional - Selecione apenas uma zona)
                 </label>
-                <div className="grid grid-cols-1 gap-3">
-                  {transportOptions.map((transport) => (
-                    <motion.button
-                      key={transport.id}
-                      onClick={() => toggleActivity(transport.id)}
-                      className={`p-3 rounded-lg border transition-all duration-300 ${
-                        extraActivities.includes(transport.id)
-                          ? 'bg-primary text-white border-primary'
-                          : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-primary'
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <span className="text-lg mr-3">{transport.icon}</span>
-                          <div>
-                            <div className="text-sm font-medium text-left">{transport.name}</div>
-                            <div className="text-xs opacity-80 text-left">{transport.description}</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {transportOptions.map((transport) => {
+                    const isSelected = extraActivities.includes(transport.id);
+                    const hasOtherTransport = extraActivities.some(id => id.startsWith('transport-') && id !== transport.id);
+                    
+                    return (
+                      <motion.button
+                        key={transport.id}
+                        onClick={() => {
+                          // Remove any previously selected transport first
+                          const withoutTransport = extraActivities.filter(id => !id.startsWith('transport-'));
+                          if (isSelected) {
+                            // If clicking on selected transport, deselect it
+                            setExtraActivities(withoutTransport);
+                          } else {
+                            // If clicking on new transport, select only this one
+                            setExtraActivities([...withoutTransport, transport.id]);
+                          }
+                        }}
+                        disabled={hasOtherTransport && !isSelected}
+                        className={`p-3 rounded-lg border transition-all duration-300 ${
+                          isSelected
+                            ? 'bg-primary text-white border-primary'
+                            : hasOtherTransport
+                            ? 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
+                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-primary'
+                        }`}
+                        whileHover={!hasOtherTransport || isSelected ? { scale: 1.02 } : {}}
+                        whileTap={!hasOtherTransport || isSelected ? { scale: 0.98 } : {}}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <span className="text-lg mr-3">{transport.icon}</span>
+                            <div>
+                              <div className="text-sm font-medium text-left">{transport.zone}</div>
+                              <div className="text-xs opacity-80 text-left">{transport.description}</div>
+                            </div>
+                          </div>
+                          <div className="text-sm font-semibold">
+                            {formatCurrency(transport.monthlyCost)}/mês
                           </div>
                         </div>
-                        <div className="text-sm font-semibold">
-                          {formatCurrency(transport.monthlyCost)}/mês
-                        </div>
-                      </div>
-                    </motion.button>
-                  ))}
+                      </motion.button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -557,7 +619,7 @@ export default function TuitionCalculator() {
                         if (transport) {
                           return (
                             <div key={itemId} className="flex items-center justify-between text-sm">
-                              <span>{transport.icon} {transport.name}</span>
+                              <span>{transport.icon} {transport.zone}</span>
                               <span className="font-semibold text-blue-600">{formatCurrency(transport.monthlyCost)}/mês</span>
                             </div>
                           );
