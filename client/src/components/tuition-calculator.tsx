@@ -168,80 +168,76 @@ export default function TuitionCalculator() {
     }
   ];
 
-  // Extra activities (monthly cost)
-  const activities = [
+  // Extra activities (INCLUDED in tuition - no additional cost)
+  const includedActivities = [
+    { 
+      id: "study-support", 
+      name: "Aulas de Reforço", 
+      icon: "📚", 
+      description: "Reforço escolar incluído na mensalidade",
+      category: "Apoio",
+      included: true
+    },
+    { 
+      id: "capoeira", 
+      name: "Capoeira", 
+      icon: "🥋", 
+      description: "Arte marcial brasileira incluída",
+      category: "Desporto",
+      included: true
+    },
     { 
       id: "swimming", 
       name: "Natação", 
-      monthlyCost: 35000, 
       icon: "🏊", 
-      description: "Aulas de natação na piscina do colégio",
-      category: "Desporto"
+      description: "Aulas de natação incluídas",
+      category: "Desporto",
+      included: true
     },
     { 
-      id: "music", 
-      name: "Música e Canto Coral", 
-      monthlyCost: 25000, 
-      icon: "🎵", 
-      description: "Piano, violão, canto e teoria musical",
-      category: "Arte"
+      id: "ballet", 
+      name: "Ballet", 
+      icon: "🩰", 
+      description: "Aulas de ballet incluídas",
+      category: "Arte",
+      included: true
     },
     { 
-      id: "art", 
-      name: "Artes Visuais e Plásticas", 
-      monthlyCost: 22000, 
-      icon: "🎨", 
-      description: "Desenho, pintura e escultura",
-      category: "Arte"
+      id: "chess", 
+      name: "Xadrez", 
+      icon: "♟️", 
+      description: "Jogos de xadrez incluídos",
+      category: "Estratégia",
+      included: true
     },
     { 
       id: "english", 
-      name: "Inglês Avançado", 
-      monthlyCost: 28000, 
+      name: "Inglês", 
       icon: "🇬🇧", 
-      description: "Preparação para certificações internacionais",
-      category: "Idiomas"
+      description: "Aulas de inglês incluídas",
+      category: "Idiomas",
+      included: true
     },
     { 
-      id: "french", 
-      name: "Francês", 
-      monthlyCost: 26000, 
-      icon: "🇫🇷", 
-      description: "Língua francesa desde o nível básico",
-      category: "Idiomas"
+      id: "games", 
+      name: "Jogos Lúdicos", 
+      icon: "🎲", 
+      description: "Atividades lúdicas incluídas",
+      category: "Recreação",
+      included: true
     },
     { 
-      id: "informatics", 
-      name: "Informática e Programação", 
-      monthlyCost: 30000, 
-      icon: "💻", 
-      description: "Office, programação básica e design gráfico",
-      category: "Tecnologia"
-    },
-    { 
-      id: "robotics", 
-      name: "Robótica e Ciências", 
-      monthlyCost: 38000, 
-      icon: "🤖", 
-      description: "Experimentos científicos e construção de robots",
-      category: "Tecnologia"
-    },
-    { 
-      id: "drama", 
-      name: "Teatro e Expressão Dramática", 
-      monthlyCost: 20000, 
-      icon: "🎭", 
-      description: "Desenvolvimento da expressão oral e corporal",
-      category: "Arte"
-    },
-    { 
-      id: "study-support", 
-      name: "Apoio ao Estudo", 
-      monthlyCost: 15000, 
-      icon: "📚", 
-      description: "Reforço escolar em horário pós-letivo",
-      category: "Apoio"
-    },
+      id: "dance-informatics", 
+      name: "Dança e Informática", 
+      icon: "💃💻", 
+      description: "Dança e informática incluídas",
+      category: "Arte/Tecnologia",
+      included: true
+    }
+  ];
+
+  // Additional paid services (if any)
+  const additionalServices = [
     { 
       id: "meals", 
       name: "Alimentação Completa", 
@@ -284,15 +280,15 @@ export default function TuitionCalculator() {
       }
     }
     
-    // Add extra activities (excluding transport)
-    const activitiesCost = extraActivities
+    // Add additional paid services (excluding transport)
+    const servicesCost = extraActivities
       .filter(activityId => !activityId.startsWith('transport-'))
       .reduce((total, activityId) => {
-        const activity = activities.find(a => a.id === activityId);
-        return total + (activity ? activity.monthlyCost : 0);
+        const service = additionalServices.find(s => s.id === activityId);
+        return total + (service ? service.monthlyCost : 0);
       }, 0);
     
-    monthlyRecurring += activitiesCost;
+    monthlyRecurring += servicesCost;
     
     // Apply discount to recurring costs
     const discountAmount = monthlyRecurring * 9 * paymentPlan.discount;
@@ -513,31 +509,62 @@ export default function TuitionCalculator() {
                 </div>
               </div>
 
-              {/* Extra Activities */}
+              {/* Included Activities Info */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Atividades Extracurriculares (Opcional)
+                  ✅ Atividades Extracurriculares Incluídas (Sem Custo Adicional)
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {activities.map((activity) => (
-                    <motion.button
-                      key={activity.id}
-                      onClick={() => toggleActivity(activity.id)}
-                      className={`p-2 sm:p-3 rounded-lg border transition-all duration-300 ${
-                        extraActivities.includes(activity.id)
-                          ? 'bg-primary text-white border-primary'
-                          : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-primary'
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <div className="text-base sm:text-lg mb-1">{activity.icon}</div>
-                      <div className="text-xs sm:text-sm font-medium">{activity.name}</div>
-                      <div className="text-xs opacity-80">{formatCurrency(activity.monthlyCost)}/mês</div>
-                    </motion.button>
-                  ))}
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 text-sm">
+                    {includedActivities.map((activity) => (
+                      <div key={activity.id} className="flex items-center">
+                        <span className="mr-2">{activity.icon}</span>
+                        <span className="text-green-800 font-medium">{activity.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-green-700 mt-3 italic">
+                    * Todas estas atividades estão incluídas na mensalidade, sem custo adicional.
+                  </p>
                 </div>
               </div>
+
+              {/* Additional Paid Services */}
+              {additionalServices.length > 0 && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Serviços Adicionais (Opcional)
+                  </label>
+                  <div className="grid grid-cols-1 gap-3">
+                    {additionalServices.map((service) => (
+                      <motion.button
+                        key={service.id}
+                        onClick={() => toggleActivity(service.id)}
+                        className={`p-3 rounded-lg border transition-all duration-300 ${
+                          extraActivities.includes(service.id)
+                            ? 'bg-primary text-white border-primary'
+                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:border-primary'
+                        }`}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <span className="text-lg mr-3">{service.icon}</span>
+                            <div>
+                              <div className="text-sm font-medium text-left">{service.name}</div>
+                              <div className="text-xs opacity-80 text-left">{service.description}</div>
+                            </div>
+                          </div>
+                          <div className="text-sm font-semibold">
+                            {formatCurrency(service.monthlyCost)}/mês
+                          </div>
+                        </div>
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Calculate Button */}
               <Button 
@@ -625,13 +652,13 @@ export default function TuitionCalculator() {
                           );
                         }
                         
-                        // Check if it's an activity
-                        const activity = activities.find(a => a.id === itemId);
-                        if (activity) {
+                        // Check if it's an additional service
+                        const service = additionalServices.find(s => s.id === itemId);
+                        if (service) {
                           return (
                             <div key={itemId} className="flex items-center justify-between text-sm">
-                              <span>{activity.icon} {activity.name}</span>
-                              <span className="font-semibold text-green-600">{formatCurrency(activity.monthlyCost)}/mês</span>
+                              <span>{service.icon} {service.name}</span>
+                              <span className="font-semibold text-green-600">{formatCurrency(service.monthlyCost)}/mês</span>
                             </div>
                           );
                         }
