@@ -99,8 +99,15 @@ export default function TuitionCalculator() {
   ];
 
   const getAvailableGrades = () => {
-    if (!selectedProgram || !programs[selectedProgram as keyof typeof programs]) return [];
-    return programs[selectedProgram as keyof typeof programs].grades;
+    try {
+      if (!selectedProgram) return [];
+      const program = programs[selectedProgram as keyof typeof programs];
+      return program?.grades || [];
+    } catch (error) {
+      console.error('Error getting available grades:', error);
+      setHasError(true);
+      return [];
+    }
   };
 
   // Initial costs structure
@@ -427,13 +434,19 @@ export default function TuitionCalculator() {
                   value={selectedProgram} 
                   onValueChange={(value) => {
                     try {
-                      setSelectedProgram(value || "");
+                      if (!value || !programs[value as keyof typeof programs]) {
+                        throw new Error('Programa inválido selecionado');
+                      }
+                      setSelectedProgram(value);
                       setSelectedGrade(""); // Reset grade when program changes
                       setShowResults(false);
                       setHasError(false);
                     } catch (error) {
                       console.error('Error selecting program:', error);
                       setHasError(true);
+                      // Reset to a valid state
+                      setSelectedProgram("");
+                      setSelectedGrade("");
                     }
                   }}
                 >
@@ -466,12 +479,16 @@ export default function TuitionCalculator() {
                   value={selectedGrade} 
                   onValueChange={(value) => {
                     try {
-                      setSelectedGrade(value || "");
+                      if (!selectedProgram) {
+                        throw new Error('Selecione um programa primeiro');
+                      }
+                      setSelectedGrade(value);
                       setShowResults(false);
                       setHasError(false);
                     } catch (error) {
                       console.error('Error selecting grade:', error);
                       setHasError(true);
+                      setSelectedGrade("");
                     }
                   }}
                   disabled={!selectedProgram}
@@ -480,16 +497,35 @@ export default function TuitionCalculator() {
                     <SelectValue placeholder={selectedProgram ? "Selecione a classe" : "Primeiro selecione o programa"} />
                   </SelectTrigger>
                   <SelectContent>
-                    {getAvailableGrades().map((grade) => (
-                      <SelectItem key={grade.id} value={grade.id}>
-                        <div className="flex items-center justify-between w-full">
-                          <span>{grade.name}</span>
-                          <span className="ml-4 text-primary font-semibold">
-                            {formatCurrency(grade.monthlyCost)}/mês
-                          </span>
-                        </div>
-                      </SelectItem>
-                    ))}
+                    {(() => {
+                      try {
+                        const grades = getAvailableGrades();
+                        if (!grades || !Array.isArray(grades) || grades.length === 0) {
+                          return (
+                            <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                              Nenhuma classe disponível
+                            </div>
+                          );
+                        }
+                        return grades.map((grade) => (
+                          <SelectItem key={grade.id} value={grade.id}>
+                            <div className="flex items-center justify-between w-full">
+                              <span>{grade.name}</span>
+                              <span className="ml-4 text-primary font-semibold">
+                                {formatCurrency(grade.monthlyCost)}/mês
+                              </span>
+                            </div>
+                          </SelectItem>
+                        ));
+                      } catch (error) {
+                        console.error('Error rendering grade options:', error);
+                        return (
+                          <div className="px-2 py-1.5 text-sm text-destructive">
+                            Erro ao carregar as classes
+                          </div>
+                        );
+                      }
+                    })()}
                   </SelectContent>
                 </Select>
               </div>
