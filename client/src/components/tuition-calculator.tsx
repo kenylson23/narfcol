@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Calculator, GraduationCap, Users, Clock, DollarSign } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -13,6 +13,29 @@ export default function TuitionCalculator() {
   const [recurringMonthlyCosts, setRecurringMonthlyCosts] = useState(0);
   const [recurringAnnualCosts, setRecurringAnnualCosts] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  
+  // Error boundary effect
+  useEffect(() => {
+    const handleError = (event: ErrorEvent) => {
+      console.error('JavaScript error in calculator:', event.error);
+      setHasError(true);
+    };
+    
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      console.error('Unhandled promise rejection in calculator:', event.reason);
+      setHasError(true);
+    };
+    
+    window.addEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    
+    return () => {
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+    };
+  }, []);
 
   const programs = {
     "mundo-magico": {
@@ -240,22 +263,33 @@ export default function TuitionCalculator() {
     }
   ];
 
-  const toggleActivity = (activityId: string) => {
-    setExtraActivities(prev => 
-      prev.includes(activityId) 
-        ? prev.filter(id => id !== activityId)
-        : [...prev, activityId]
-    );
-  };
+  const toggleActivity = useCallback((activityId: string) => {
+    try {
+      setExtraActivities(prev => 
+        prev.includes(activityId) 
+          ? prev.filter(id => id !== activityId)
+          : [...prev, activityId]
+      );
+    } catch (error) {
+      console.error('Error toggling activity:', error);
+      setHasError(true);
+    }
+  }, []);
 
-  const calculateTotal = () => {
+  const calculateTotal = useCallback(() => {
     if (!selectedProgram || !selectedGrade || !selectedPayment) return;
 
-    const program = programs[selectedProgram as keyof typeof programs];
-    const grade = program?.grades.find(g => g.id === selectedGrade);
-    const paymentPlan = paymentPlans.find(p => p.id === selectedPayment);
-    
-    if (!program || !grade || !paymentPlan) return;
+    try {
+      setIsLoading(true);
+      setHasError(false);
+
+      const program = programs[selectedProgram as keyof typeof programs];
+      const grade = program?.grades.find(g => g.id === selectedGrade);
+      const paymentPlan = paymentPlans.find(p => p.id === selectedPayment);
+      
+      if (!program || !grade || !paymentPlan) {
+        throw new Error('Dados inválidos selecionados');
+      }
 
     // 🔹 PARTE 1 - PAGAMENTO INICIAL (uma única vez)
     const totalInitialCosts = Object.values(initialCostsStructure).reduce((sum, cost) => sum + cost, 0);
@@ -286,11 +320,17 @@ export default function TuitionCalculator() {
     const discountAmount = monthlyRecurring * 9 * paymentPlan.discount;
     const annualRecurringDiscounted = (monthlyRecurring * 9) - discountAmount;
     
-    setInitialCosts(totalInitialCosts);
-    setRecurringMonthlyCosts(monthlyRecurring);
-    setRecurringAnnualCosts(annualRecurringDiscounted);
-    setShowResults(true);
-  };
+      setInitialCosts(totalInitialCosts);
+      setRecurringMonthlyCosts(monthlyRecurring);
+      setRecurringAnnualCosts(annualRecurringDiscounted);
+      setShowResults(true);
+    } catch (error) {
+      console.error('Error calculating total:', error);
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [selectedProgram, selectedGrade, selectedPayment, extraActivities]);
 
   const getCurrentGrade = () => {
     if (!selectedProgram || !selectedGrade) return null;
@@ -303,13 +343,28 @@ export default function TuitionCalculator() {
     return programs[selectedProgram as keyof typeof programs];
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('pt-AO', {
-      style: 'currency',
-      currency: 'AOA',
-      minimumFractionDigits: 0
-    }).format(amount);
-  };
+  const formatCurrency = useCallback((amount: number) => {
+    try {
+      // Fallback for environments that might not support AOA currency
+      if (typeof Intl === 'undefined' || !Intl.NumberFormat) {
+        return `AOA ${amount.toLocaleString('pt-PT', { minimumFractionDigits: 0 })}`;
+      }
+      
+      try {
+        return new Intl.NumberFormat('pt-AO', {
+          style: 'currency',
+          currency: 'AOA',
+          minimumFractionDigits: 0
+        }).format(amount);
+      } catch (currencyError) {
+        // Fallback if AOA is not supported
+        return `AOA ${amount.toLocaleString('pt-PT', { minimumFractionDigits: 0 })}`;
+      }
+    } catch (error) {
+      console.warn('Currency formatting error:', error);
+      return `AOA ${amount}`;
+    }
+  }, []);
 
   const getPaymentPlan = () => {
     const plan = paymentPlans.find(p => p.id === selectedPayment);
@@ -368,11 +423,20 @@ export default function TuitionCalculator() {
                   <GraduationCap className="inline mr-2" size={16} />
                   Programa de Ensino
                 </label>
-                <Select value={selectedProgram} onValueChange={(value) => {
-                  setSelectedProgram(value);
-                  setSelectedGrade(""); // Reset grade when program changes
-                  setShowResults(false);
-                }}>
+                <Select 
+                  value={selectedProgram} 
+                  onValueChange={(value) => {
+                    try {
+                      setSelectedProgram(value || "");
+                      setSelectedGrade(""); // Reset grade when program changes
+                      setShowResults(false);
+                      setHasError(false);
+                    } catch (error) {
+                      console.error('Error selecting program:', error);
+                      setHasError(true);
+                    }
+                  }}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione o programa" />
                   </SelectTrigger>
@@ -400,7 +464,16 @@ export default function TuitionCalculator() {
                 </label>
                 <Select 
                   value={selectedGrade} 
-                  onValueChange={setSelectedGrade}
+                  onValueChange={(value) => {
+                    try {
+                      setSelectedGrade(value || "");
+                      setShowResults(false);
+                      setHasError(false);
+                    } catch (error) {
+                      console.error('Error selecting grade:', error);
+                      setHasError(true);
+                    }
+                  }}
                   disabled={!selectedProgram}
                 >
                   <SelectTrigger className="w-full">
@@ -427,7 +500,19 @@ export default function TuitionCalculator() {
                   <Clock className="inline mr-2" size={16} />
                   Plano de Pagamento
                 </label>
-                <Select value={selectedPayment} onValueChange={setSelectedPayment}>
+                <Select 
+                  value={selectedPayment} 
+                  onValueChange={(value) => {
+                    try {
+                      setSelectedPayment(value || "");
+                      setShowResults(false);
+                      setHasError(false);
+                    } catch (error) {
+                      console.error('Error selecting payment plan:', error);
+                      setHasError(true);
+                    }
+                  }}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione o plano" />
                   </SelectTrigger>
@@ -461,15 +546,22 @@ export default function TuitionCalculator() {
                     return (
                       <motion.button
                         key={transport.id}
-                        onClick={() => {
-                          // Remove any previously selected transport first
-                          const withoutTransport = extraActivities.filter(id => !id.startsWith('transport-'));
-                          if (isSelected) {
-                            // If clicking on selected transport, deselect it
-                            setExtraActivities(withoutTransport);
-                          } else {
-                            // If clicking on new transport, select only this one
-                            setExtraActivities([...withoutTransport, transport.id]);
+                        onClick={(e) => {
+                          e.preventDefault();
+                          try {
+                            // Remove any previously selected transport first
+                            const withoutTransport = extraActivities.filter(id => !id.startsWith('transport-'));
+                            if (isSelected) {
+                              // If clicking on selected transport, deselect it
+                              setExtraActivities(withoutTransport);
+                            } else {
+                              // If clicking on new transport, select only this one
+                              setExtraActivities([...withoutTransport, transport.id]);
+                            }
+                            setShowResults(false); // Reset results when selection changes
+                          } catch (error) {
+                            console.error('Error selecting transport:', error);
+                            setHasError(true);
                           }
                         }}
                         disabled={hasOtherTransport && !isSelected}
@@ -532,7 +624,16 @@ export default function TuitionCalculator() {
                     {additionalServices.map((service) => (
                       <motion.button
                         key={service.id}
-                        onClick={() => toggleActivity(service.id)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          try {
+                            toggleActivity(service.id);
+                            setShowResults(false); // Reset results when selection changes
+                          } catch (error) {
+                            console.error('Error selecting service:', error);
+                            setHasError(true);
+                          }
+                        }}
                         className={`p-3 rounded-lg border transition-all duration-300 ${
                           extraActivities.includes(service.id)
                             ? 'bg-primary text-white border-primary'
@@ -562,12 +663,33 @@ export default function TuitionCalculator() {
               {/* Calculate Button */}
               <Button 
                 onClick={calculateTotal}
-                className="w-full bg-primary hover:bg-primary/80 text-white py-4 text-lg font-semibold"
-                disabled={!selectedProgram || !selectedGrade || !selectedPayment}
+                className="w-full bg-primary hover:bg-primary/80 text-white py-4 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!selectedProgram || !selectedGrade || !selectedPayment || isLoading}
               >
-                <DollarSign className="mr-2" size={20} />
-                Calcular Mensalidade
+                {isLoading ? (
+                  <motion.div
+                    className="mr-2"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Calculator size={20} />
+                  </motion.div>
+                ) : (
+                  <DollarSign className="mr-2" size={20} />
+                )}
+                {isLoading ? 'Calculando...' : 'Calcular Mensalidade'}
               </Button>
+              
+              {/* Error Message */}
+              {hasError && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm"
+                >
+                  ⚠️ Erro ao calcular mensalidade. Tente novamente ou recarregue a página.
+                </motion.div>
+              )}
             </div>
           </motion.div>
 
