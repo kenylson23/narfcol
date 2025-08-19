@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { getLocalImage } from "@/lib/local-images";
 
 export default function GallerySection() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
@@ -17,7 +18,7 @@ export default function GallerySection() {
   const images = [
     {
       id: 1,
-      src: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
+      src: getLocalImage("screenshot"),
       alt: "Campus Principal",
       category: "campus",
       title: "Campus Principal",
@@ -25,11 +26,11 @@ export default function GallerySection() {
     },
     {
       id: 2,
-      src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      alt: "Cerimónia de Graduação",
-      category: "events",
-      title: "Cerimónia de Graduação 2024",
-      description: "Momento especial da formatura dos nossos alunos"
+      src: getLocalImage("image1"),
+      alt: "Colégio Narfive",
+      category: "campus",
+      title: "Instalações do Colégio",
+      description: "Nossas modernas instalações educacionais"
     },
     {
       id: 3,

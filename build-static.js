@@ -51,6 +51,27 @@ try {
   // Write favicon files
   writeFileSync(resolve(distPublic, 'favicon.svg'), faviconSvg);
   
+  // Copy uploaded images from client/public to dist/public
+  const clientPublic = resolve(__dirname, 'client/public');
+  const { readdirSync } = await import('fs');
+  
+  try {
+    const publicFiles = readdirSync(clientPublic).filter(file => 
+      file !== 'favicon.svg' && (file.endsWith('.png') || file.endsWith('.jpg') || file.endsWith('.jpeg') || file.endsWith('.gif') || file.endsWith('.webp'))
+    );
+    
+    publicFiles.forEach(file => {
+      const sourcePath = resolve(clientPublic, file);
+      const destPath = resolve(distPublic, file);
+      copyFileSync(sourcePath, destPath);
+      console.log(`📸 Copied image: ${file}`);
+    });
+    
+    console.log(`📸 Total images copied: ${publicFiles.length}`);
+  } catch (error) {
+    console.log('📁 No additional images to copy or error reading public directory');
+  }
+  
   console.log('✅ Static build completed successfully!');
   console.log('📁 Files generated in: dist/public');
   console.log('🎯 Ready for Netlify deployment!');
