@@ -6,64 +6,77 @@ import { Button } from "@/components/ui/button";
 
 export default function TuitionCalculator() {
   const [selectedProgram, setSelectedProgram] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedGrade, setSelectedGrade] = useState("");
   const [selectedPayment, setSelectedPayment] = useState("");
   const [extraActivities, setExtraActivities] = useState<string[]>([]);
   const [totalCost, setTotalCost] = useState(0);
   const [showResults, setShowResults] = useState(false);
 
-  const programs = [
-    { 
-      id: "mundo-magico", 
-      name: "Mundo Mágico (Educação Infantil)", 
-      baseCost: 85000, 
+  const programs = {
+    "mundo-magico": {
+      name: "🌟 Mundo Mágico (Educação Infantil)",
       icon: "🧸",
-      description: "Pré-escolar e Iniciação - Metodologia lúdica e desenvolvimento integral",
-      enrollmentFee: 25000,
-      grades: "Pré-escolar e Iniciação"
+      description: "Metodologia lúdica e desenvolvimento integral",
+      grades: [
+        { id: "pre-escolar", name: "Pré-escolar", monthlyCost: 24000 },
+        { id: "iniciacao", name: "Iniciação", monthlyCost: 24500 }
+      ]
     },
-    { 
-      id: "ensino-primario", 
-      name: "Ensino Primário", 
-      baseCost: 130000, 
+    "ensino-primario": {
+      name: "📚 Ensino Primário",
       icon: "🎒",
-      description: "Da 1ª à 6ª Classe - Base sólida em todas as disciplinas fundamentais",
-      enrollmentFee: 35000,
-      grades: "1ª à 6ª Classe"
+      description: "Base sólida em todas as disciplinas fundamentais",
+      grades: [
+        { id: "1a", name: "1ª Classe", monthlyCost: 25000 },
+        { id: "2a", name: "2ª Classe", monthlyCost: 25500 },
+        { id: "3a", name: "3ª Classe", monthlyCost: 26000 },
+        { id: "4a", name: "4ª Classe", monthlyCost: 26500 },
+        { id: "5a", name: "5ª Classe", monthlyCost: 27000 },
+        { id: "6a", name: "6ª Classe", monthlyCost: 28000 }
+      ]
     },
-    { 
-      id: "i-ciclo-secundario", 
-      name: "I Ciclo - Ensino Secundário", 
-      baseCost: 165000, 
+    "i-ciclo-secundario": {
+      name: "🏫 I Ciclo – Ensino Secundário",
       icon: "📖",
-      description: "Da 7ª à 9ª Classe - Formação geral com disciplinas fundamentais",
-      enrollmentFee: 45000,
-      grades: "7ª à 9ª Classe"
+      description: "Formação geral com disciplinas fundamentais",
+      grades: [
+        { id: "7a", name: "7ª Classe", monthlyCost: 26500 },
+        { id: "8a", name: "8ª Classe", monthlyCost: 27000 },
+        { id: "9a", name: "9ª Classe", monthlyCost: 28000 }
+      ]
     },
-    { 
-      id: "ii-ciclo-puniv", 
-      name: "II Ciclo PUNIV (C.F.B / C.E.J.)", 
-      baseCost: 195000, 
+    "ii-ciclo-puniv": {
+      name: "🏫 II Ciclo – PUNIV (C.F.B / C.E.J.)",
       icon: "🎓",
-      description: "Da 10ª à 12ª Classe - Cursos Gerais para preparação universitária",
-      enrollmentFee: 55000,
-      grades: "10ª à 12ª Classe"
+      description: "Cursos Gerais para preparação universitária",
+      grades: [
+        { id: "10a-cfb", name: "10ª Classe", monthlyCost: 28000 },
+        { id: "11a-cfb", name: "11ª Classe", monthlyCost: 29000 },
+        { id: "12a-cfb", name: "12ª Classe", monthlyCost: 29000 }
+      ]
     },
-    { 
-      id: "medio-tecnico", 
-      name: "Médio Técnico (INFOGEST / CONGEST)", 
-      baseCost: 220000, 
+    "medio-tecnico": {
+      name: "🏫 II Ciclo – Médio Técnico (INFOGEST / CONGEST)",
       icon: "💼",
-      description: "Da 10ª à 13ª Classe - Formação técnica profissional",
-      enrollmentFee: 65000,
-      grades: "10ª à 13ª Classe"
+      description: "Formação técnica profissional especializada",
+      grades: [
+        { id: "10a-tec", name: "10ª Classe", monthlyCost: 29000 },
+        { id: "11a-tec", name: "11ª Classe", monthlyCost: 32000 },
+        { id: "12a-tec", name: "12ª Classe", monthlyCost: 32000 },
+        { id: "13a-tec", name: "13ª Classe", monthlyCost: 33000 }
+      ]
     }
-  ];
+  };
 
-  const years = [
+  const academicYears = [
     { id: "2024-2025", name: "Ano Letivo 2024/2025", multiplier: 1, status: "atual" },
     { id: "2025-2026", name: "Ano Letivo 2025/2026", multiplier: 1.05, status: "próximo" }
   ];
+
+  const getAvailableGrades = () => {
+    if (!selectedProgram || !programs[selectedProgram as keyof typeof programs]) return [];
+    return programs[selectedProgram as keyof typeof programs].grades;
+  };
 
   const paymentPlans = [
     { 
@@ -208,28 +221,44 @@ export default function TuitionCalculator() {
   };
 
   const calculateTotal = () => {
-    if (!selectedProgram || !selectedPayment) return;
+    if (!selectedProgram || !selectedGrade || !selectedPayment) return;
 
-    const program = programs.find(p => p.id === selectedProgram);
+    const program = programs[selectedProgram as keyof typeof programs];
+    const grade = program?.grades.find(g => g.id === selectedGrade);
     const paymentPlan = paymentPlans.find(p => p.id === selectedPayment);
     
-    if (!program || !paymentPlan) return;
+    if (!program || !grade || !paymentPlan) return;
 
-    let baseCost = program.baseCost;
+    // Monthly cost becomes annual cost (10 months)
+    let annualBaseCost = grade.monthlyCost * 10;
     
     // Apply discount
-    const discountAmount = baseCost * paymentPlan.discount;
-    const discountedCost = baseCost - discountAmount;
+    const discountAmount = annualBaseCost * paymentPlan.discount;
+    const discountedCost = annualBaseCost - discountAmount;
     
-    // Add extra activities
+    // Add extra activities (also annual)
     const activitiesCost = extraActivities.reduce((total, activityId) => {
       const activity = activities.find(a => a.id === activityId);
-      return total + (activity ? activity.cost : 0);
+      return total + (activity ? activity.cost * 10 : 0); // Activities are also for 10 months
     }, 0);
     
-    const total = discountedCost + activitiesCost;
+    // Add payment plan fees
+    const additionalFees = paymentPlan.additionalFees || 0;
+    
+    const total = discountedCost + activitiesCost + additionalFees;
     setTotalCost(total);
     setShowResults(true);
+  };
+
+  const getCurrentGrade = () => {
+    if (!selectedProgram || !selectedGrade) return null;
+    const program = programs[selectedProgram as keyof typeof programs];
+    return program?.grades.find(g => g.id === selectedGrade);
+  };
+
+  const getCurrentProgram = () => {
+    if (!selectedProgram) return null;
+    return programs[selectedProgram as keyof typeof programs];
   };
 
   const formatCurrency = (amount: number) => {
@@ -297,19 +326,23 @@ export default function TuitionCalculator() {
                   <GraduationCap className="inline mr-2" size={16} />
                   Programa de Ensino
                 </label>
-                <Select value={selectedProgram} onValueChange={setSelectedProgram}>
+                <Select value={selectedProgram} onValueChange={(value) => {
+                  setSelectedProgram(value);
+                  setSelectedGrade(""); // Reset grade when program changes
+                  setShowResults(false);
+                }}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione o programa" />
                   </SelectTrigger>
                   <SelectContent>
-                    {programs.map((program) => (
-                      <SelectItem key={program.id} value={program.id}>
-                        <div className="flex items-center">
+                    {Object.entries(programs).map(([key, program]) => (
+                      <SelectItem key={key} value={key}>
+                        <div className="flex items-center w-full">
                           <span className="mr-2">{program.icon}</span>
-                          <span>{program.name}</span>
-                          <span className="ml-auto text-primary font-semibold">
-                            {formatCurrency(program.baseCost)}
-                          </span>
+                          <div className="flex-1">
+                            <div className="font-medium">{program.name}</div>
+                            <div className="text-xs text-gray-500">{program.description}</div>
+                          </div>
                         </div>
                       </SelectItem>
                     ))}
@@ -317,20 +350,29 @@ export default function TuitionCalculator() {
                 </Select>
               </div>
 
-              {/* Year Selection */}
+              {/* Grade Selection */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   <Users className="inline mr-2" size={16} />
-                  Ano Letivo
+                  Classe/Ano
                 </label>
-                <Select value={selectedYear} onValueChange={setSelectedYear}>
+                <Select 
+                  value={selectedGrade} 
+                  onValueChange={setSelectedGrade}
+                  disabled={!selectedProgram}
+                >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Selecione o ano" />
+                    <SelectValue placeholder={selectedProgram ? "Selecione a classe" : "Primeiro selecione o programa"} />
                   </SelectTrigger>
                   <SelectContent>
-                    {years.map((year) => (
-                      <SelectItem key={year.id} value={year.id}>
-                        {year.name}
+                    {getAvailableGrades().map((grade) => (
+                      <SelectItem key={grade.id} value={grade.id}>
+                        <div className="flex items-center justify-between w-full">
+                          <span>{grade.name}</span>
+                          <span className="ml-4 text-primary font-semibold">
+                            {formatCurrency(grade.monthlyCost)}/mês
+                          </span>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -394,7 +436,7 @@ export default function TuitionCalculator() {
               <Button 
                 onClick={calculateTotal}
                 className="w-full bg-primary hover:bg-primary/80 text-white py-4 text-lg font-semibold"
-                disabled={!selectedProgram || !selectedPayment}
+                disabled={!selectedProgram || !selectedGrade || !selectedPayment}
               >
                 <DollarSign className="mr-2" size={20} />
                 Calcular Mensalidade
@@ -412,7 +454,7 @@ export default function TuitionCalculator() {
           >
             <h3 className="text-2xl font-bold text-secondary mb-6">Resumo da Mensalidade</h3>
             
-            {showResults && selectedProgram && selectedPayment ? (
+            {showResults && selectedProgram && selectedGrade && selectedPayment ? (
               <motion.div 
                 className="space-y-6"
                 initial={{ opacity: 0, y: 20 }}
@@ -423,14 +465,20 @@ export default function TuitionCalculator() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium">Programa Selecionado:</span>
+                    <span className="text-primary font-semibold text-sm">
+                      {getCurrentProgram()?.name}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-medium">Classe:</span>
                     <span className="text-primary font-semibold">
-                      {programs.find(p => p.id === selectedProgram)?.name}
+                      {getCurrentGrade()?.name}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Valor Base:</span>
+                    <span className="text-sm text-gray-600">Valor Mensal:</span>
                     <span className="font-semibold">
-                      {formatCurrency(programs.find(p => p.id === selectedProgram)?.baseCost || 0)}
+                      {formatCurrency(getCurrentGrade()?.monthlyCost || 0)}
                     </span>
                   </div>
                 </div>
