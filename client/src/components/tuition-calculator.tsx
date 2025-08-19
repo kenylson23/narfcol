@@ -168,71 +168,63 @@ export default function TuitionCalculator() {
     }
   ];
 
-  // Extra activities (INCLUDED in tuition - no additional cost)
-  const includedActivities = [
+  // Available extracurricular activities (costs determined by consultation)
+  const availableActivities = [
     { 
       id: "study-support", 
       name: "Aulas de Reforço", 
       icon: "📚", 
-      description: "Reforço escolar incluído na mensalidade",
-      category: "Apoio",
-      included: true
+      description: "Reforço escolar personalizado",
+      category: "Apoio"
     },
     { 
       id: "capoeira", 
       name: "Capoeira", 
       icon: "🥋", 
-      description: "Arte marcial brasileira incluída",
-      category: "Desporto",
-      included: true
+      description: "Arte marcial brasileira",
+      category: "Desporto"
     },
     { 
       id: "swimming", 
       name: "Natação", 
       icon: "🏊", 
-      description: "Aulas de natação incluídas",
-      category: "Desporto",
-      included: true
+      description: "Aulas de natação na piscina do colégio",
+      category: "Desporto"
     },
     { 
       id: "ballet", 
       name: "Ballet", 
       icon: "🩰", 
-      description: "Aulas de ballet incluídas",
-      category: "Arte",
-      included: true
+      description: "Aulas de ballet clássico",
+      category: "Arte"
     },
     { 
       id: "chess", 
       name: "Xadrez", 
       icon: "♟️", 
-      description: "Jogos de xadrez incluídos",
-      category: "Estratégia",
-      included: true
+      description: "Jogos de estratégia e raciocínio",
+      category: "Estratégia"
     },
     { 
       id: "english", 
       name: "Inglês", 
       icon: "🇬🇧", 
-      description: "Aulas de inglês incluídas",
-      category: "Idiomas",
-      included: true
+      description: "Aulas de língua inglesa",
+      category: "Idiomas"
     },
     { 
       id: "games", 
       name: "Jogos Lúdicos", 
       icon: "🎲", 
-      description: "Atividades lúdicas incluídas",
-      category: "Recreação",
-      included: true
+      description: "Atividades recreativas e educativas",
+      category: "Recreação"
     },
     { 
       id: "dance-informatics", 
       name: "Dança e Informática", 
       icon: "💃💻", 
-      description: "Dança e informática incluídas",
-      category: "Arte/Tecnologia",
-      included: true
+      description: "Combinação de expressão corporal e tecnologia",
+      category: "Arte/Tecnologia"
     }
   ];
 
@@ -509,22 +501,22 @@ export default function TuitionCalculator() {
                 </div>
               </div>
 
-              {/* Included Activities Info */}
+              {/* Available Activities Info */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  ✅ Atividades Extracurriculares Incluídas (Sem Custo Adicional)
+                  🎯 Atividades Extracurriculares Disponíveis
                 </label>
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 text-sm">
-                    {includedActivities.map((activity) => (
+                    {availableActivities.map((activity) => (
                       <div key={activity.id} className="flex items-center">
                         <span className="mr-2">{activity.icon}</span>
-                        <span className="text-green-800 font-medium">{activity.name}</span>
+                        <span className="text-blue-800 font-medium">{activity.name}</span>
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs text-green-700 mt-3 italic">
-                    * Todas estas atividades estão incluídas na mensalidade, sem custo adicional.
+                  <p className="text-xs text-blue-700 mt-3 italic">
+                    💬 Valores das atividades extracurriculares definidos por consulta. Entre em contacto para mais informações.
                   </p>
                 </div>
               </div>
