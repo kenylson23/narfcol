@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 
-export default function ProgramsSection() {
+const ProgramsSection = memo(function ProgramsSection() {
   const programs = [
     {
       icon: "fas fa-graduation-cap",
@@ -160,4 +161,6 @@ export default function ProgramsSection() {
       </div>
     </section>
   );
-}
+});
+
+export default ProgramsSection;

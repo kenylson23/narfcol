@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Calculator, GraduationCap, Users, Clock, DollarSign } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -132,14 +132,18 @@ export default function TuitionCalculator() {
     return program?.grades || [];
   }, [selectedProgram]);
 
-  // Initial costs structure
-  const initialCostsStructure = {
+  // Memoized initial costs structure
+  const initialCostsStructure = useMemo(() => ({
     enrollment: 45000,      // Matrícula
     confirmation: 25000,    // Confirmação
     insurance: 15000,       // Seguro
     uniforms: 35000,        // Uniformes
     card: 5000              // Cartão
-  };
+  }), []);
+
+  const totalInitialCosts = useMemo(() => {
+    return Object.values(initialCostsStructure).reduce((sum, cost) => sum + cost, 0);
+  }, [initialCostsStructure]);
 
   const paymentPlans = [
     { 
@@ -326,7 +330,7 @@ export default function TuitionCalculator() {
       }
 
     // 🔹 PARTE 1 - PAGAMENTO INICIAL (uma única vez)
-    const totalInitialCosts = Object.values(initialCostsStructure).reduce((sum, cost) => sum + cost, 0);
+    // Using pre-calculated total
     
     // 🔹 PARTE 2 - PAGAMENTO RECORRENTE (mensal)
     let monthlyRecurring = grade.monthlyCost; // Mensalidade base
@@ -375,16 +379,16 @@ export default function TuitionCalculator() {
     }
   }, [selectedProgram, selectedGrade, selectedPayment, extraActivities, isMounted]);
 
-  const getCurrentGrade = () => {
+  const getCurrentGrade = useCallback(() => {
     if (!selectedProgram || !selectedGrade) return null;
     const program = programs[selectedProgram as keyof typeof programs];
     return program?.grades.find(g => g.id === selectedGrade);
-  };
+  }, [selectedProgram, selectedGrade]);
 
-  const getCurrentProgram = () => {
+  const getCurrentProgram = useCallback(() => {
     if (!selectedProgram) return null;
     return programs[selectedProgram as keyof typeof programs];
-  };
+  }, [selectedProgram]);
 
   const formatCurrency = useCallback((amount: number) => {
     try {
@@ -412,10 +416,10 @@ export default function TuitionCalculator() {
     }
   }, []);
 
-  const getPaymentPlan = () => {
+  const getPaymentPlan = useCallback(() => {
     const plan = paymentPlans.find(p => p.id === selectedPayment);
-    return plan ? plan : null;
-  };
+    return plan || null;
+  }, [selectedPayment]);
 
   // Error fallback component
   if (hasError) {

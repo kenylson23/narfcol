@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, memo, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { getLocalImage } from "@/lib/local-images";
 
-export default function GallerySection() {
+const GallerySection = memo(function GallerySection() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [currentCategory, setCurrentCategory] = useState("all");
 
@@ -90,29 +90,29 @@ export default function GallerySection() {
     }
   ];
 
-  const filteredImages = currentCategory === "all" 
+  const filteredImages = useMemo(() => currentCategory === "all" 
     ? images 
-    : images.filter(img => img.category === currentCategory);
+    : images.filter(img => img.category === currentCategory), [currentCategory]);
 
-  const openLightbox = (index: number) => {
+  const openLightbox = useCallback((index: number) => {
     setSelectedImage(index);
-  };
+  }, []);
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setSelectedImage(null);
-  };
+  }, []);
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     if (selectedImage !== null) {
       setSelectedImage((selectedImage + 1) % filteredImages.length);
     }
-  };
+  }, [selectedImage, filteredImages.length]);
 
-  const prevImage = () => {
+  const prevImage = useCallback(() => {
     if (selectedImage !== null) {
       setSelectedImage(selectedImage === 0 ? filteredImages.length - 1 : selectedImage - 1);
     }
-  };
+  }, [selectedImage, filteredImages.length]);
 
   return (
     <section id="gallery" className="py-20 bg-gradient-to-br from-neutral to-white relative overflow-hidden">
@@ -190,6 +190,8 @@ export default function GallerySection() {
                 <img
                   src={image.src}
                   alt={image.alt}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -260,4 +262,6 @@ export default function GallerySection() {
       </div>
     </section>
   );
-}
+});
+
+export default GallerySection;

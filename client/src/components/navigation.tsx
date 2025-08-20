@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 
-export default function Navigation() {
+const Navigation = memo(function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -148,4 +148,6 @@ export default function Navigation() {
       </motion.div>
     </nav>
   );
-}
+});
+
+export default Navigation;

@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 
-export default function AboutSection() {
+const AboutSection = memo(function AboutSection() {
   const stats = [
     { number: "25+", label: "Anos de Experiência" },
     { number: "1500+", label: "Estudantes Ativos" },
@@ -137,4 +138,6 @@ export default function AboutSection() {
       </div>
     </section>
   );
-}
+});
+
+export default AboutSection;
