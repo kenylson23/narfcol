@@ -15,27 +15,35 @@ export default function TuitionCalculator() {
   const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
   
-  // Error boundary effect
+  // Setup and cleanup effect
   useEffect(() => {
+    setIsMounted(true);
+    
     const handleError = (event: ErrorEvent) => {
       console.error('JavaScript error in calculator:', event.error);
-      setHasError(true);
+      if (isMounted) {
+        setHasError(true);
+      }
     };
     
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
       console.error('Unhandled promise rejection in calculator:', event.reason);
-      setHasError(true);
+      if (isMounted) {
+        setHasError(true);
+      }
     };
     
     window.addEventListener('error', handleError);
     window.addEventListener('unhandledrejection', handleUnhandledRejection);
     
     return () => {
+      setIsMounted(false);
       window.removeEventListener('error', handleError);
       window.removeEventListener('unhandledrejection', handleUnhandledRejection);
     };
-  }, []);
+  }, [isMounted]);
 
   const programs = {
     "mundo-magico": {
@@ -98,17 +106,12 @@ export default function TuitionCalculator() {
     { id: "2025-2026", name: "Ano Letivo 2025/2026", multiplier: 1.05, status: "próximo" }
   ];
 
-  const getAvailableGrades = () => {
-    try {
-      if (!selectedProgram) return [];
-      const program = programs[selectedProgram as keyof typeof programs];
-      return program?.grades || [];
-    } catch (error) {
-      console.error('Error getting available grades:', error);
-      setHasError(true);
-      return [];
-    }
-  };
+  const getAvailableGrades = useCallback(() => {
+    if (!selectedProgram) return [];
+    // Acesso seguro ao programa
+    const program = (programs as any)[selectedProgram];
+    return program?.grades || [];
+  }, [selectedProgram]);
 
   // Initial costs structure
   const initialCostsStructure = {
@@ -271,20 +274,25 @@ export default function TuitionCalculator() {
   ];
 
   const toggleActivity = useCallback((activityId: string) => {
+    if (!isMounted) return;
+    
     try {
-      setExtraActivities(prev => 
-        prev.includes(activityId) 
+      setExtraActivities(prev => {
+        const newActivities = prev.includes(activityId) 
           ? prev.filter(id => id !== activityId)
-          : [...prev, activityId]
-      );
+          : [...prev, activityId];
+        return newActivities;
+      });
     } catch (error) {
       console.error('Error toggling activity:', error);
-      setHasError(true);
+      if (isMounted) {
+        setHasError(true);
+      }
     }
-  }, []);
+  }, [isMounted]);
 
   const calculateTotal = useCallback(() => {
-    if (!selectedProgram || !selectedGrade || !selectedPayment) return;
+    if (!selectedProgram || !selectedGrade || !selectedPayment || !isMounted) return;
 
     try {
       setIsLoading(true);
@@ -327,17 +335,23 @@ export default function TuitionCalculator() {
     const discountAmount = monthlyRecurring * 9 * paymentPlan.discount;
     const annualRecurringDiscounted = (monthlyRecurring * 9) - discountAmount;
     
-      setInitialCosts(totalInitialCosts);
-      setRecurringMonthlyCosts(monthlyRecurring);
-      setRecurringAnnualCosts(annualRecurringDiscounted);
-      setShowResults(true);
+      if (isMounted) {
+        setInitialCosts(totalInitialCosts);
+        setRecurringMonthlyCosts(monthlyRecurring);
+        setRecurringAnnualCosts(annualRecurringDiscounted);
+        setShowResults(true);
+      }
     } catch (error) {
       console.error('Error calculating total:', error);
-      setHasError(true);
+      if (isMounted) {
+        setHasError(true);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted) {
+        setIsLoading(false);
+      }
     }
-  }, [selectedProgram, selectedGrade, selectedPayment, extraActivities]);
+  }, [selectedProgram, selectedGrade, selectedPayment, extraActivities, isMounted]);
 
   const getCurrentGrade = () => {
     if (!selectedProgram || !selectedGrade) return null;
@@ -431,22 +445,17 @@ export default function TuitionCalculator() {
                   Programa de Ensino
                 </label>
                 <Select 
-                  value={selectedProgram} 
+                  value={selectedProgram}
                   onValueChange={(value) => {
                     try {
-                      if (!value || !programs[value as keyof typeof programs]) {
-                        throw new Error('Programa inválido selecionado');
-                      }
                       setSelectedProgram(value);
-                      setSelectedGrade(""); // Reset grade when program changes
+                      setSelectedGrade("");
                       setShowResults(false);
                       setHasError(false);
+                      console.log('Programa selecionado:', value);
                     } catch (error) {
-                      console.error('Error selecting program:', error);
+                      console.error('Erro ao selecionar programa:', error);
                       setHasError(true);
-                      // Reset to a valid state
-                      setSelectedProgram("");
-                      setSelectedGrade("");
                     }
                   }}
                 >
