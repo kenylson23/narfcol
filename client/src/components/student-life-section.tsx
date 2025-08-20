@@ -2,29 +2,29 @@ import { motion } from "framer-motion";
 
 export default function StudentLifeSection() {
   const activities = [
-    { icon: "fas fa-microscope", label: "Clube de Ciências" },
+    { icon: "fas fa-microscope", label: "Jornadas Científicas" },
     { icon: "fas fa-music", label: "Orquestra Escolar" },
-    { icon: "fas fa-chess", label: "Clube de Xadrez" },
+    { icon: "fas fa-chess", label: "Acampamentos Inter-Províncias" },
     { icon: "fas fa-theater-masks", label: "Grupo de Teatro" },
-    { icon: "fas fa-robot", label: "Robótica" },
+    { icon: "fas fa-robot", label: "Tribunal Simulado" },
     { icon: "fas fa-newspaper", label: "Jornal Escolar" }
   ];
 
   const facilities = [
     {
       icon: "fas fa-book",
-      title: "Biblioteca Digital",
-      description: "Acesso a mais de 50.000 recursos digitais e físicos"
+      title: "Portal do Aluno",
+      description: "Brevemente estará disponível Para visualização de notas,faltas,desempenho escolares.Com acesso para encarregados,alunos e professores"
     },
     {
       icon: "fas fa-flask",
-      title: "Laboratórios Científicos",
-      description: "Equipamentos modernos para física, química e biologia"
+      title: "Atividades Científicas",
+      description: "Atividades modernas para física, química e biologia"
     },
     {
       icon: "fas fa-dumbbell",
       title: "Complexo Desportivo",
-      description: "Ginásio, campos de futebol, basquetebol e piscina"
+      description: "Campo de futebol, basquetebol"
     }
   ];
 

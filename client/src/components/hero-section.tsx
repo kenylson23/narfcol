@@ -220,7 +220,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
         >
-          Educação de Excelência, Formando o Futuro de Angola
+          A QUALIDADE DE ENSINO QUE O TEU FILHO MERECE, VOCÊ ENCONTRA AQUI!
         </motion.p>
         
         <motion.div 
