@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import HeroSection from "@/components/hero-section";
 import AboutSection from "@/components/about-section";
@@ -14,29 +13,13 @@ import Navigation from "@/components/navigation";
 import ScrollToTop from "@/components/scroll-to-top";
 
 export default function Home() {
-  useEffect(() => {
-    // Add Font Awesome for icons
-    const fontAwesome = document.createElement('link');
-    fontAwesome.rel = 'stylesheet';
-    fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
-    document.head.appendChild(fontAwesome);
-
-    return () => {
-      // Cleanup on unmount - safely remove if element still exists
-      if (fontAwesome && document.head.contains(fontAwesome)) {
-        document.head.removeChild(fontAwesome);
-      }
-    };
-  }, []);
+  // No longer need dynamic Font Awesome loading - it's now in the HTML head
 
   return (
     <>
       <Helmet>
-        <title>Colégio Narfive - Educação de Excelência em Angola</title>
-        <meta name="description" content="Colégio Narfive oferece educação de excelência em Angola, formando líderes para o futuro através da inovação, conhecimento e valores sólidos. Conheça nossos programas educacionais." />
         <meta name="keywords" content="colégio, educação, Angola, escola, ensino, Narfive, qualidade, excelência" />
         <meta name="author" content="Colégio Narfive" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content="Colégio Narfive - Educação de Excelência em Angola" />
         <meta property="og:description" content="Formando líderes para o futuro através da inovação, conhecimento e valores sólidos." />
         <meta property="og:type" content="website" />
