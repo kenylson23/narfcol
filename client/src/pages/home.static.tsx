@@ -22,8 +22,10 @@ export default function Home() {
     document.head.appendChild(fontAwesome);
 
     return () => {
-      // Cleanup on unmount
-      document.head.removeChild(fontAwesome);
+      // Cleanup on unmount - safely remove if element still exists
+      if (fontAwesome && document.head.contains(fontAwesome)) {
+        document.head.removeChild(fontAwesome);
+      }
     };
   }, []);
 
