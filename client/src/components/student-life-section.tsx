@@ -70,7 +70,7 @@ export default function StudentLifeSection() {
             viewport={{ once: true }}
           >
             <motion.img 
-              src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+              src="/Jornada1.jpg" 
               alt="Feira de Ciências" 
               className="rounded-2xl shadow-2xl w-full h-auto"
               whileHover={{ scale: 1.02 }}
