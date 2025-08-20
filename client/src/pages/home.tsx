@@ -14,25 +14,44 @@ import ScrollToTop from "@/components/scroll-to-top";
 
 export default function Home() {
   useEffect(() => {
-    // Scroll reveal animation
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+    // Check if window and document exist (SSR safety)
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    if (!('IntersectionObserver' in window)) return;
+    
+    try {
+      // Scroll reveal animation
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.target.classList) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      }, observerOptions);
+
+      // Add a small delay to ensure DOM is ready
+      const timeoutId = setTimeout(() => {
+        const elements = document.querySelectorAll('.scroll-reveal');
+        elements.forEach(el => {
+          if (observer && el) {
+            observer.observe(el);
+          }
+        });
+      }, 100);
+
+      return () => {
+        clearTimeout(timeoutId);
+        if (observer) {
+          observer.disconnect();
         }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
-      observer.observe(el);
-    });
-
-    return () => observer.disconnect();
+      };
+    } catch (error) {
+      // Silently fail if IntersectionObserver is not supported
+    }
   }, []);
 
   return (

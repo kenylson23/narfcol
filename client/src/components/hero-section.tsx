@@ -21,9 +21,16 @@ export default function HeroSection() {
   const floatingY3 = useTransform(scrollYProgress, [0, 1], ["0%", "60%"]);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    // Check if document exists (SSR safety)
+    if (typeof document === 'undefined') return;
+    
+    try {
+      const element = document.getElementById(sectionId);
+      if (element && element.scrollIntoView) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } catch (error) {
+      // Silently fail if scrollIntoView is not supported
     }
   };
 

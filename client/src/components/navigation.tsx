@@ -6,18 +6,43 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    // Check if window exists (SSR safety)
+    if (typeof window === 'undefined') return;
+    
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
+      if (typeof window !== 'undefined') {
+        setIsScrolled(window.scrollY > 100);
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    try {
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        try {
+          if (typeof window !== 'undefined') {
+            window.removeEventListener('scroll', handleScroll);
+          }
+        } catch (error) {
+          // Silently fail during cleanup
+        }
+      };
+    } catch (error) {
+      // Silently fail if addEventListener is not available
+    }
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    // Check if document exists (SSR safety)
+    if (typeof document === 'undefined') return;
+    
+    try {
+      const element = document.getElementById(sectionId);
+      if (element && element.scrollIntoView) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        setIsMobileMenuOpen(false);
+      }
+    } catch (error) {
+      // Silently fail if scrollIntoView is not supported
       setIsMobileMenuOpen(false);
     }
   };
