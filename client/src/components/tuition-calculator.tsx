@@ -22,26 +22,45 @@ export default function TuitionCalculator() {
     setIsMounted(true);
     
     const handleError = (event: ErrorEvent) => {
-      console.error('JavaScript error in calculator:', event.error);
+      // Only log in development environment
+      if (typeof window !== 'undefined' && window.location?.hostname === 'localhost') {
+        console.error('JavaScript error in calculator:', event.error);
+      }
       if (isMounted) {
         setHasError(true);
       }
     };
     
     const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      console.error('Unhandled promise rejection in calculator:', event.reason);
+      // Only log in development environment
+      if (typeof window !== 'undefined' && window.location?.hostname === 'localhost') {
+        console.error('Unhandled promise rejection in calculator:', event.reason);
+      }
       if (isMounted) {
         setHasError(true);
       }
     };
     
-    window.addEventListener('error', handleError);
-    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    // Safely add event listeners
+    try {
+      if (typeof window !== 'undefined') {
+        window.addEventListener('error', handleError);
+        window.addEventListener('unhandledrejection', handleUnhandledRejection);
+      }
+    } catch (error) {
+      // Silently fail if event listeners can't be added
+    }
     
     return () => {
       setIsMounted(false);
-      window.removeEventListener('error', handleError);
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+      try {
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('error', handleError);
+          window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+        }
+      } catch (error) {
+        // Silently fail during cleanup
+      }
     };
   }, [isMounted]);
 
@@ -342,7 +361,10 @@ export default function TuitionCalculator() {
         setShowResults(true);
       }
     } catch (error) {
-      console.error('Error calculating total:', error);
+      // Only log in development environment
+      if (typeof window !== 'undefined' && window.location?.hostname === 'localhost') {
+        console.error('Error calculating total:', error);
+      }
       if (isMounted) {
         setHasError(true);
       }
@@ -382,8 +404,11 @@ export default function TuitionCalculator() {
         return `AOA ${amount.toLocaleString('pt-PT', { minimumFractionDigits: 0 })}`;
       }
     } catch (error) {
-      console.warn('Currency formatting error:', error);
-      return `AOA ${amount}`;
+      // Only log in development environment
+      if (typeof window !== 'undefined' && window.location?.hostname === 'localhost') {
+        console.warn('Currency formatting error:', error);
+      }
+      return `AOA ${amount.toString()}`;
     }
   }, []);
 
@@ -391,6 +416,34 @@ export default function TuitionCalculator() {
     const plan = paymentPlans.find(p => p.id === selectedPayment);
     return plan ? plan : null;
   };
+
+  // Error fallback component
+  if (hasError) {
+    return (
+      <section id="tuition-calculator" className="py-20 bg-gradient-to-br from-primary/5 to-primary/10 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 border border-white/20">
+            <Calculator className="w-16 h-16 mx-auto mb-4 text-primary" />
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+              Calculadora Temporariamente Indisponível
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Estamos trabalhando para resolver este problema. Por favor, entre em contato conosco para informações sobre mensalidades.
+            </p>
+            <Button 
+              onClick={() => {
+                setHasError(false);
+                setShowResults(false);
+              }}
+              className="bg-primary hover:bg-primary/90 text-white"
+            >
+              Tentar Novamente
+            </Button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="tuition-calculator" className="py-20 bg-gradient-to-br from-primary/5 to-primary/10 relative overflow-hidden">
