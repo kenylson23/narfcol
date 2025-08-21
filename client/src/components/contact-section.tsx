@@ -95,10 +95,26 @@ export default function ContactSection() {
   ];
 
   const socialLinks = [
-    { icon: "fab fa-facebook-f", href: "https://www.facebook.com/colegionarfive2021" },
-    { icon: "fab fa-instagram", href: "#" },
-    { icon: "fab fa-linkedin-in", href: "#" },
-    { icon: "fab fa-youtube", href: "#" }
+    { 
+      icon: "fab fa-facebook-f", 
+      href: "https://www.facebook.com/colegionarfive2021",
+      label: "Facebook do Colégio Narfive"
+    },
+    { 
+      icon: "fab fa-instagram", 
+      href: "#",
+      label: "Instagram do Colégio Narfive"
+    },
+    { 
+      icon: "fab fa-linkedin-in", 
+      href: "#",
+      label: "LinkedIn do Colégio Narfive"
+    },
+    { 
+      icon: "fab fa-youtube", 
+      href: "#",
+      label: "YouTube do Colégio Narfive"
+    }
   ];
 
   return (
@@ -212,6 +228,9 @@ export default function ContactSection() {
                     <motion.a
                       key={index}
                       href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
                       className="bg-primary/20 p-3 rounded-full hover:bg-primary/30 transition-colors duration-300"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}

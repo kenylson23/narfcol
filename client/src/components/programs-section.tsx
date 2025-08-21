@@ -4,37 +4,37 @@ import { motion } from "framer-motion";
 const ProgramsSection = memo(function ProgramsSection() {
   const programs = [
     {
-      icon: "fas fa-graduation-cap",
+      icon: "graduation-cap",
       title: "Ensino Primário",
       description: "Fundamental sólida com foco no desenvolvimento da literacia, numeracia e pensamento crítico através de metodologias inovadoras.",
       features: ["Currículo Bilingue", "Tecnologia Educacional", "Desenvolvimento Socioemocional"]
     },
     {
-      icon: "fas fa-book-open",
+      icon: "book-open",
       title: "Ensino Secundário",
       description: "Preparação robusta para o ensino superior com ênfase em ciências, humanidades e desenvolvimento de competências do século XXI.",
       features: ["Atividades Técnicas", "Programa Internacional", "Orientação Vocacional"]
     },
     {
-      icon: "fas fa-laptop-code",
+      icon: "laptop-code",
       title: "Programas STEM",
       description: "Iniciativas especializadas em Ciência, Tecnologia, Engenharia e Matemática para preparar os inovadores do futuro.",
       features: ["Programação", "Competições Nacionais"]
     },
     {
-      icon: "fas fa-palette",
+      icon: "palette",
       title: "Artes e Cultura",
       description: "Desenvolvimento da criatividade e expressão cultural através de programas integrados de artes visuais, música e teatro.",
       features: ["Grupos Artísticos", "Orquestra Escolar", "Teatro e Drama"]
     },
     {
-      icon: "fas fa-running",
+      icon: "dumbbell",
       title: "Desporto e Saúde",
       description: "Programa abrangente de educação física e desporto para promover saúde, disciplina e trabalho em equipa.",
       features: ["Complexo Desportivo", "Equipas Competitivas", "Educação Nutricional"]
     },
     {
-      icon: "fas fa-globe-africa",
+      icon: "globe-africa",
       title: "Línguas e Culturas",
       description: "Programas multilíngues que celebram a diversidade cultural angolana e preparam cidadãos globais.",
       features: ["Português Nativo", "Inglês", "Acampamentos Inter-Províncias"]
@@ -118,7 +118,7 @@ const ProgramsSection = memo(function ProgramsSection() {
                   ease: "easeInOut"
                 }}
               >
-                <i className={program.icon}></i>
+                <i className={`fas fa-${program.icon}`}></i>
                 <motion.div 
                   className="absolute -inset-2 bg-primary/20 rounded-full blur-md"
                   animate={{
@@ -143,7 +143,7 @@ const ProgramsSection = memo(function ProgramsSection() {
               <ul className="text-sm text-gray-700 space-y-2 mb-6">
                 {program.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-center">
-                    <i className="fas fa-check text-success mr-2"></i> 
+                    <i className="fas fa-check text-green-600 mr-2"></i> 
                     {feature}
                   </li>
                 ))}
