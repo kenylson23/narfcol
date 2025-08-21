@@ -142,15 +142,31 @@ export default function Footer() {
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <p className="text-gray-300">
-            © 2024 Colégio Narfive. Todos os direitos reservados. | 
-            <a href="#" className="text-primary hover:text-primary/80 transition-colors duration-300 ml-1">
-              Política de Privacidade
-            </a> | 
-            <a href="#" className="text-primary hover:text-primary/80 transition-colors duration-300 ml-1">
-              Termos de Serviço
-            </a>
-          </p>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-2 text-gray-300">
+            <p>© 2025 Colégio Narfive. Todos os direitos reservados.</p>
+            <div className="hidden md:block">|</div>
+            <div className="flex flex-wrap justify-center gap-x-2">
+              <a href="#" className="text-primary hover:text-primary/80 transition-colors duration-300">
+                Política de Privacidade
+              </a>
+              <span className="hidden md:inline">|</span>
+              <a href="#" className="text-primary hover:text-primary/80 transition-colors duration-300">
+                Termos de Serviço
+              </a>
+              <span className="hidden md:inline">|</span>
+              <span>
+                Desenvolvido por{' '}
+                <a 
+                  href="https://www.instagram.com/keny_ggg/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-primary/80 transition-colors duration-300 font-medium"
+                >
+                  Kenylson Lourenço
+                </a>
+              </span>
+            </div>
+          </div>
         </motion.div>
       </div>
     </footer>
