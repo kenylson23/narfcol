@@ -69,30 +69,46 @@ export default function StaticContactForm() {
     {
       icon: 'fas fa-map-marker-alt',
       title: 'Localização',
-      content: 'Rua Principal, 123\nLuanda, Angola'
+      content: 'Zango 3A, lado direito da 1ª paragem no sentido Viana Calumbo, Quadra E1, Rua 6 das Laranjas.'
     },
     {
       icon: 'fas fa-phone',
-      title: 'Telefone',
-      content: '+244 923 456 789\n+244 923 456 790'
+      title: 'Contactos',
+      content: '943 482 837 / 922 001 213'
     },
     {
       icon: 'fas fa-envelope',
       title: 'Email',
-      content: 'info@colegionarfive.ao\nadmissoes@colegionarfive.ao'
+      content: 'info@colegionarfive.ao'
     },
     {
       icon: 'fas fa-clock',
-      title: 'Horário',
-      content: 'Segunda - Sexta: 7h00 - 17h00\nSábado: 8h00 - 12h00'
+      title: 'Horário de Funcionamento',
+      content: 'Segunda a Sexta: 7:00 - 17:00\nSábado: 8:00 - 12:00'
     }
   ];
 
   const socialLinks = [
-    { icon: 'fab fa-facebook-f', href: '#' },
-    { icon: 'fab fa-instagram', href: '#' },
-    { icon: 'fab fa-twitter', href: '#' },
-    { icon: 'fab fa-linkedin-in', href: '#' }
+    { 
+      icon: 'fab fa-facebook-f', 
+      href: 'https://www.facebook.com/colegionarfive2021',
+      label: 'Facebook do Colégio Narfive'
+    },
+    { 
+      icon: 'fab fa-instagram', 
+      href: '#',
+      label: 'Instagram do Colégio Narfive'
+    },
+    { 
+      icon: 'fab fa-linkedin-in', 
+      href: '#',
+      label: 'LinkedIn do Colégio Narfive'
+    },
+    { 
+      icon: 'fab fa-youtube', 
+      href: '#',
+      label: 'YouTube do Colégio Narfive'
+    }
   ];
 
   return (
