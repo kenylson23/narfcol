@@ -30,16 +30,16 @@ export default function StudentLifeSection() {
 
   const eventImages = [
     {
-      src: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-      alt: "Festival Cultural"
+      src: "/Desporto1.jpg",
+      alt: "Atividades Desportivas"
     },
     {
-      src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-      alt: "Cerimónia de Graduação"
+      src: "/Instalações2.jpg",
+      alt: "Instalações Escolares"
     },
     {
-      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
-      alt: "Competições Desportivas"
+      src: "/Solida.jpg",
+      alt: "Ações de Solidariedade"
     }
   ];
 
@@ -117,8 +117,8 @@ export default function StudentLifeSection() {
             viewport={{ once: true }}
           >
             <motion.img 
-              src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-              alt="Biblioteca Moderna" 
+              src="/Desporto2.jpg" 
+              alt="Complexo Desportivo" 
               className="rounded-2xl shadow-2xl w-full h-auto"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}

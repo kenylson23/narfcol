@@ -9,15 +9,31 @@ const GallerySection = memo(function GallerySection() {
 
   const categories = [
     { id: "all", name: "Todas" },
-    { id: "campus", name: "Campus" },
+    { id: "Acampamento", name: "Acampamento" },
     { id: "students", name: "Estudantes" },
     { id: "events", name: "Eventos" },
-    { id: "facilities", name: "Instalações" }
+    { id: "Fraternidade", name: "Fraternidade" }
   ];
 
   const images = [
     {
       id: 1,
+      src: "/Acampamento 3.jpg",
+      alt: "Acampamento 3",
+      category: "Acampamento",
+      title: "Acampamento",
+      description: "Momentos especiais do nosso acampamento"
+    },
+    {
+      id: 2,
+      src: "/Acampamento 4.jpg",
+      alt: "Acampamento 4",
+      category: "Acampamento",
+      title: "Atividades ao Ar Livre",
+      description: "Diversão e aprendizado na natureza"
+    },
+    {
+      id: 3,
       src: getLocalImage("screenshot"),
       alt: "Campus Principal",
       category: "campus",
@@ -25,7 +41,7 @@ const GallerySection = memo(function GallerySection() {
       description: "Vista do edifício principal do Colégio Narfive"
     },
     {
-      id: 2,
+      id: 4,
       src: getLocalImage("image1"),
       alt: "Colégio Narfive",
       category: "campus",
@@ -33,39 +49,31 @@ const GallerySection = memo(function GallerySection() {
       description: "Nossas modernas instalações educacionais"
     },
     {
-      id: 3,
-      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      alt: "Atividades Desportivas",
-      category: "students",
-      title: "Atividades Desportivas",
-      description: "Estudantes participando em competições desportivas"
-    },
-    {
-      id: 4,
-      src: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      alt: "Biblioteca Moderna",
-      category: "facilities",
-      title: "Biblioteca Digital",
-      description: "Espaço moderno de estudo e pesquisa"
-    },
-    {
       id: 5,
-      src: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      alt: "Laboratório de Ciências",
-      category: "facilities",
-      title: "Laboratório de Ciências",
-      description: "Equipamentos modernos para experimentação"
+      src: "/estu.jpg",
+      alt: "Estudantes",
+      category: "students",
+      title: "Nossos Estudantes",
+      description: "Estudantes engajados em atividades educacionais"
     },
     {
       id: 6,
-      src: "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      alt: "Festival Cultural",
+      src: "/Infa6.jpg",
+      alt: "Evento Infa6",
       category: "events",
-      title: "Festival Cultural Anual",
-      description: "Celebração da diversidade cultural angolana"
+      title: "Evento Infa6",
+      description: "Celebração do nosso evento Infa6"
     },
     {
       id: 7,
+      src: "/bap.jpg",
+      alt: "Evento BAP",
+      category: "events",
+      title: "Evento BAP",
+      description: "Momento especial do nosso evento BAP"
+    },
+    {
+      id: 8,
       src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
       alt: "Sala de Aula Interativa",
       category: "facilities",
@@ -73,15 +81,39 @@ const GallerySection = memo(function GallerySection() {
       description: "Ambiente tecnológico para aprendizagem"
     },
     {
-      id: 8,
-      src: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      alt: "Estudantes em Ação",
+      id: 9,
+      src: "/estu 2.jpg",
+      alt: "Estudantes em Aula",
       category: "students",
-      title: "Estudantes em Ação",
-      description: "Momentos de aprendizagem colaborativa"
+      title: "Aprendizado em Grupo",
+      description: "Estudantes colaborando em atividades em sala de aula"
     },
     {
-      id: 9,
+      id: 10,
+      src: "/Infa3.jpg",
+      alt: "Fraternidade Infa3",
+      category: "Fraternidade",
+      title: "Fraternidade",
+      description: "Momentos de união e amizade"
+    },
+    {
+      id: 11,
+      src: "/Infa5.jpg",
+      alt: "Fraternidade Infa5",
+      category: "Fraternidade",
+      title: "Eventos da Fraternidade",
+      description: "Atividades que fortalecem os laços"
+    },
+    {
+      id: 12,
+      src: "/DG5.jpg",
+      alt: "Fraternidade DG5",
+      category: "Fraternidade",
+      title: "Encontros Especiais",
+      description: "Compartilhando experiências e aprendizados"
+    },
+    {
+      id: 13,
       src: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
       alt: "Área Externa",
       category: "campus",
