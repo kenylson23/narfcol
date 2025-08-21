@@ -33,22 +33,6 @@ const GallerySection = memo(function GallerySection() {
       description: "Diversão e aprendizado na natureza"
     },
     {
-      id: 3,
-      src: getLocalImage("screenshot"),
-      alt: "Campus Principal",
-      category: "campus",
-      title: "Campus Principal",
-      description: "Vista do edifício principal do Colégio Narfive"
-    },
-    {
-      id: 4,
-      src: getLocalImage("image1"),
-      alt: "Colégio Narfive",
-      category: "campus",
-      title: "Instalações do Colégio",
-      description: "Nossas modernas instalações educacionais"
-    },
-    {
       id: 5,
       src: "/estu.jpg",
       alt: "Estudantes",
@@ -71,14 +55,6 @@ const GallerySection = memo(function GallerySection() {
       category: "events",
       title: "Evento BAP",
       description: "Momento especial do nosso evento BAP"
-    },
-    {
-      id: 8,
-      src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      alt: "Sala de Aula Interativa",
-      category: "facilities",
-      title: "Salas de Aula Modernas",
-      description: "Ambiente tecnológico para aprendizagem"
     },
     {
       id: 9,
@@ -111,14 +87,6 @@ const GallerySection = memo(function GallerySection() {
       category: "Fraternidade",
       title: "Encontros Especiais",
       description: "Compartilhando experiências e aprendizados"
-    },
-    {
-      id: 13,
-      src: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-      alt: "Área Externa",
-      category: "campus",
-      title: "Jardins do Campus",
-      description: "Espaços verdes para relaxamento"
     }
   ];
 
