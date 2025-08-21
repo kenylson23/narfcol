@@ -75,7 +75,7 @@ export default function ContactSection() {
     {
       icon: "fas fa-map-marker-alt",
       title: "Localização",
-      content: "Zango 3A, lado direito da 1ª paragem no sentido Viana Calumbo\nQuadra E1, Rua 6 das Laranjas"
+      content: "Zango 3A, lado direito da 1ª paragem no sentido Viana Calumbo, Quadra E1, Rua 6 das Laranjas."
     },
     {
       icon: "fas fa-phone",
@@ -95,7 +95,7 @@ export default function ContactSection() {
   ];
 
   const socialLinks = [
-    { icon: "fab fa-facebook-f", href: "#" },
+    { icon: "fab fa-facebook-f", href: "https://www.facebook.com/colegionarfive2021" },
     { icon: "fab fa-instagram", href: "#" },
     { icon: "fab fa-linkedin-in", href: "#" },
     { icon: "fab fa-youtube", href: "#" }
