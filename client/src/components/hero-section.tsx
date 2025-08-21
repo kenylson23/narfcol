@@ -250,6 +250,7 @@ export default function HeroSection() {
           
           <motion.button 
             className="border-2 border-white text-white hover:bg-white hover:text-primary px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold interactive-hover section-transition relative overflow-hidden"
+            onClick={() => scrollToSection('virtual-tour')}
             whileHover={{ 
               scale: 1.1,
               rotateY: -5,
