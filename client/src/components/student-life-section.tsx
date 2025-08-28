@@ -30,7 +30,7 @@ export default function StudentLifeSection() {
 
   const eventImages = [
     {
-      src: "/Desporto1.jpg",
+      src: "/Desporto1 .jpg",
       alt: "Atividades Desportivas"
     },
     {
